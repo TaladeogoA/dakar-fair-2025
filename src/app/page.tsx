@@ -36,21 +36,6 @@ const Home = () => {
       title: 'Creative Industries Forum',
       blurb: 'Financing, distribution, and cross-continental co-production talks.',
     },
-    {
-      date: 'Sat • May 17, 2025',
-      title: 'Artisanal Heritage Lab',
-      blurb: 'Live craft ateliers and design collaborations with master artisans.',
-    },
-    {
-      date: 'Sun • May 18, 2025',
-      title: 'Digital Africa Summit',
-      blurb: 'XR installations, AI art gallery, and founder keynotes.',
-    },
-    {
-      date: 'Mon • May 19, 2025',
-      title: 'Closing Gala & Awards',
-      blurb: 'Celebrating outstanding work from across the continent.',
-    },
   ];
 
   return (

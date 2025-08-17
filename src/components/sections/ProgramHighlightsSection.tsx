@@ -1,7 +1,7 @@
 'use client';
 
 import AnimatedButton from '@/components/ui/AnimatedButton';
-import { easeInOut, motion, useAnimationControls, Variants } from 'framer-motion';
+import { easeInOut, motion, Variants } from 'framer-motion';
 import { ArrowUpRight, Calendar } from 'lucide-react';
 import { RefCallback, useEffect, useMemo, useRef, useState } from 'react';
 
@@ -29,110 +29,30 @@ const sectionItem: Variants = {
 
 export default function ProgramHighlightsSection({ highlights }: { highlights: Highlight[] }) {
     const [currentIndex, setCurrentIndex] = useState(0);
-    const prevIndexRef = useRef(0);
     const containerRef = useRef<HTMLDivElement | null>(null);
     const itemRefs = useRef<Array<HTMLLIElement | null>>([]);
-    const dotRefs = useRef<Array<HTMLDivElement | null>>([]);
-    const [dotPositions, setDotPositions] = useState<number[]>([]);
-    const indicatorControls = useAnimationControls();
-    const isAnimatingRef = useRef(false);
-    const pendingIndexRef = useRef<number | null>(null);
-    const manualOverrideRef = useRef(false);
+    const manualUntilRef = useRef<number | null>(null);
     const manualTimerRef = useRef<number | null>(null);
-
-    const stepDuration = 0.12;
 
     const setItemRefAt = (index: number): RefCallback<HTMLLIElement> => (el) => {
         itemRefs.current[index] = el;
     };
-    const setDotRefAt = (index: number): RefCallback<HTMLDivElement> => (el) => {
-        dotRefs.current[index] = el;
-    };
 
-    const measureDots = () => {
-        if (!containerRef.current) return;
-        const cRect = containerRef.current.getBoundingClientRect();
-        const positions = dotRefs.current.map((el) => {
-            if (!el) return 0;
-            const r = el.getBoundingClientRect();
-            return r.top - cRect.top + r.height / 2;
-        });
-        setDotPositions(positions);
-    };
-
-    const setManualOverride = () => {
-        manualOverrideRef.current = true;
+    const triggerManual = (idx: number) => {
+        setCurrentIndex(idx);
+        manualUntilRef.current = Date.now() + 1200;
         if (manualTimerRef.current) window.clearTimeout(manualTimerRef.current);
         manualTimerRef.current = window.setTimeout(() => {
-            manualOverrideRef.current = false;
+            manualUntilRef.current = null;
         }, 1200);
     };
-
-    const moveIndicator = async (nextIndex: number, source: 'manual' | 'observer' = 'manual') => {
-        if (nextIndex === prevIndexRef.current) return;
-        if (source === 'observer' && manualOverrideRef.current) return;
-        if (source === 'manual') setManualOverride();
-
-        if (isAnimatingRef.current) {
-            pendingIndexRef.current = nextIndex;
-            return;
-        }
-
-        isAnimatingRef.current = true;
-
-        const from = prevIndexRef.current;
-        const dir = nextIndex > from ? 1 : -1;
-        const indexes: number[] = [];
-        for (let i = from; dir > 0 ? i <= nextIndex : i >= nextIndex; i += dir) indexes.push(i);
-        const positions = indexes.map((i) => dotPositions[i] ?? 0);
-        const len = Math.max(positions.length - 1, 1);
-        const times = positions.map((_, i) => (len === 0 ? 1 : i / len));
-
-        await indicatorControls.start({
-            y: positions,
-            transition: { ease: 'linear', duration: len * stepDuration, times },
-        });
-
-        prevIndexRef.current = nextIndex;
-        setCurrentIndex(nextIndex);
-        isAnimatingRef.current = false;
-
-        if (pendingIndexRef.current !== null && pendingIndexRef.current !== nextIndex) {
-            const target = pendingIndexRef.current;
-            pendingIndexRef.current = null;
-            void moveIndicator(target, 'manual');
-        } else {
-            pendingIndexRef.current = null;
-        }
-    };
-
-    useEffect(() => {
-        measureDots();
-        const ro = new ResizeObserver(() => measureDots());
-        if (containerRef.current) ro.observe(containerRef.current);
-        const onScroll = () => measureDots();
-        window.addEventListener('scroll', onScroll, { passive: true });
-        window.addEventListener('resize', measureDots, { passive: true });
-        return () => {
-            ro.disconnect();
-            window.removeEventListener('scroll', onScroll);
-            window.removeEventListener('resize', measureDots);
-        };
-    }, []);
-
-    useEffect(() => {
-        if (!dotPositions.length) return;
-        if (!isAnimatingRef.current) {
-            indicatorControls.set({ y: dotPositions[currentIndex] ?? 0 });
-        }
-    }, [dotPositions, currentIndex, indicatorControls]);
 
     useEffect(() => {
         const items = itemRefs.current.filter((el): el is HTMLLIElement => !!el);
         if (!items.length) return;
         const observer = new IntersectionObserver(
             (entries) => {
-                let bestIdx = prevIndexRef.current;
+                let bestIdx = 0;
                 let bestRatio = 0;
                 entries.forEach((e) => {
                     const idxAttr = (e.target as HTMLElement).dataset.index;
@@ -142,13 +62,15 @@ export default function ProgramHighlightsSection({ highlights }: { highlights: H
                         bestIdx = idx;
                     }
                 });
-                if (bestRatio >= 0.55) void moveIndicator(bestIdx, 'observer');
+                if (bestRatio >= 0.55 && (!manualUntilRef.current || Date.now() > manualUntilRef.current)) {
+                    setCurrentIndex(bestIdx);
+                }
             },
             { root: null, threshold: [0, 0.25, 0.55, 0.75, 1] }
         );
         items.forEach((el) => observer.observe(el));
         return () => observer.disconnect();
-    }, [highlights.length, dotPositions]);
+    }, [highlights.length]);
 
     const header = useMemo(
         () => (
@@ -181,11 +103,6 @@ export default function ProgramHighlightsSection({ highlights }: { highlights: H
 
                 <div ref={containerRef} className="relative mt-12 mx-auto max-w-3xl pl-8">
                     <span className="pointer-events-none absolute left-4 top-0 bottom-0 w-px bg-gradient-to-b from-[#2E5339]/20 via-[#2E5339]/30 to-[#2E5339]/20" />
-                    <motion.span
-                        className="pointer-events-none absolute left-4 h-6 w-6 -translate-x-1/2 rounded-full ring-2 ring-[#2E5339] shadow-[0_0_0_6px_rgba(46,83,57,0.12)] bg-transparent"
-                        animate={indicatorControls}
-                        initial={{ y: 0 }}
-                    />
                     <ul className="space-y-2">
                         {highlights.map((item, idx) => {
                             const active = currentIndex === idx;
@@ -199,12 +116,12 @@ export default function ProgramHighlightsSection({ highlights }: { highlights: H
                                 >
                                     <a
                                         href="#agenda"
-                                        onMouseEnter={() => void moveIndicator(idx, 'manual')}
-                                        onFocus={() => void moveIndicator(idx, 'manual')}
+                                        onMouseEnter={() => triggerManual(idx)}
+                                        onFocus={() => triggerManual(idx)}
                                         className="group relative grid grid-cols-[2rem_1fr] items-start gap-4 rounded-xl px-3 py-5"
                                     >
                                         <div className="relative z-10 flex items-start">
-                                            <div ref={setDotRefAt(idx)} className="relative h-8 w-8 grid place-items-center">
+                                            <div className="relative h-8 w-8 grid place-items-center">
                                                 {idx === 0 && (
                                                     <motion.span
                                                         aria-hidden
@@ -222,6 +139,15 @@ export default function ProgramHighlightsSection({ highlights }: { highlights: H
                                                     className="h-2.5 w-2.5 rounded-full"
                                                     style={{ backgroundColor: idx === 0 ? '#E67E22' : '#2E5339', opacity: idx === 0 ? 1 : 0.9 }}
                                                 />
+                                                {active && (
+                                                    <motion.span
+                                                        layoutId="dotIndicator"
+                                                        className="absolute inset-0 grid place-items-center"
+                                                        transition={{ type: 'spring', stiffness: 500, damping: 40, mass: 0.5 }}
+                                                    >
+                                                        <span className="h-6 w-6 rounded-full ring-2 ring-[#2E5339] shadow-[0_0_0_6px_rgba(46,83,57,0.12)]" />
+                                                    </motion.span>
+                                                )}
                                             </div>
                                         </div>
                                         <div className="relative z-10">
