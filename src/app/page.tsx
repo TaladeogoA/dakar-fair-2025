@@ -171,7 +171,7 @@ const Home = () => {
           </section>
 
           {/* About Dakar 2025 */}
-          <section className="py-24 px-4 bg-white">
+          <section className="py-24 px-4 bg-[#2E5339] text-white">
             <div className="max-w-7xl mx-auto">
               {/* Lede + body */}
               <div className="grid md:grid-cols-12 gap-10 md:gap-12 items-start">
@@ -181,7 +181,7 @@ const Home = () => {
                   whileInView={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.6, ease: "easeInOut" }}
                   viewport={{ once: true, amount: 0.3 }}
-                  className="md:col-span-7 text-4xl md:text-6xl leading-tight font-sans text-gray-900"
+                  className="md:col-span-7 text-4xl md:text-6xl leading-tight font-sans text-white"
                 >
                   A reimagined International Fair returns to Dakar in 2025. A landmark meeting point for film, design, music, and technology shaping the Pan-African future.
                 </motion.h2>
@@ -194,7 +194,7 @@ const Home = () => {
                   viewport={{ once: true, amount: 0.3 }}
                   className="md:col-span-5 md:pl-6"
                 >
-                  <p className="text-base md:text-lg text-gray-600 leading-relaxed">
+                  <p className="text-base md:text-lg text-white leading-relaxed">
                     Hosted on the renovated grounds of the original Exhibition Centre, the 2025 Fair advances five core goals: Intellectual leadership in Pan-African cultural discourse, economic diversification through creative industries, the
                     preservation and innovation of artisanal heritage, Digital Africa leadership, and education through cultural repatriation.
                   </p>
