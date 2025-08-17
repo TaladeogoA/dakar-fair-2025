@@ -8,51 +8,23 @@ import UcadLogo from '@/assets/partner-ucad.png';
 import ZeitzLogo from '@/assets/partner-zeitz.jpg';
 import Preloader from '@/components/Preloader';
 import AnimatedButton from '@/components/ui/AnimatedButton';
-import { motion } from 'framer-motion';
+import { motion, Variants } from 'framer-motion';
 import {
   ArrowUpRight,
   Calendar,
   X as CloseIcon,
-  Globe,
-  Heart,
-  Lightbulb,
   Mail,
   MapPin,
   Menu as MenuIcon,
-  Palette,
-  Phone,
-  Users,
+  Phone
 } from 'lucide-react';
 import Image from 'next/image';
-import { useEffect, useRef, useState } from 'react';
+import { useRef, useState } from 'react';
 
 const Home = () => {
-  const [currentArtisan, setCurrentArtisan] = useState(0);
   const [menuOpen, setMenuOpen] = useState(false);
   const [loading, setLoading] = useState(true);
   const videoRef = useRef<HTMLVideoElement>(null);
-
-  const artisans = [
-    { name: 'Aminata Diallo', craft: 'Textile Weaving', image: 'https://images.unsplash.com/photo-1594736797933-d0f1dd2b3d8f?w=400&h=400&fit=crop' },
-    { name: 'Mamadou Seck', craft: 'Wood Carving', image: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&h=400&fit=crop' },
-    { name: 'Fatou Ba', craft: 'Pottery', image: 'https://images.unsplash.com/photo-1551836022-d5d88e9218df?w=400&h=400&fit=crop' },
-  ];
-
-  const themes = [
-    { title: 'Cultural Heritage', icon: Heart, description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.' },
-    { title: 'Innovation Hub', icon: Lightbulb, description: 'Sed do eiusmod tempor incididunt ut labore et dolore.' },
-    { title: 'Pan-African Unity', icon: Globe, description: 'Ut enim ad minim veniam, quis nostrud exercitation.' },
-    { title: 'Artistic Excellence', icon: Palette, description: 'Duis aute irure dolor in reprehenderit in voluptate.' },
-    { title: 'Youth Engagement', icon: Users, description: 'Excepteur sint occaecat cupidatat non proident.' },
-  ];
-
-  const timeline = [
-    { day: 'Day 1', title: 'Opening Ceremony', description: 'Keynote on Pan-African cultural future' },
-    { day: 'Day 2', title: 'Creative Industries', description: 'Panels on economics & innovation' },
-    { day: 'Day 3', title: 'Artisan Showcase', description: 'Traditional crafts reimagined' },
-    { day: 'Day 4', title: 'Digital Africa', description: 'Technology meets tradition' },
-    { day: 'Day 5', title: 'Closing Concert', description: 'Cultural repatriation dialogue' },
-  ];
 
   const partnerLogos = [
     { src: MuseeLogo, alt: "Musée des Civilisations Noires" },
@@ -63,17 +35,16 @@ const Home = () => {
     { src: AuLogo, alt: "African Union" },
   ];
 
-  // Program highlights (fictional dates/content)
   const highlights = [
     {
       date: 'Thu • May 15, 2025',
       title: 'Opening Night Premiere',
-      blurb: 'Red‑carpet screening and welcome concert at the Exhibition Centre Grand Hall.',
+      blurb: 'Red-carpet screening and welcome concert at the Exhibition Centre Grand Hall.',
     },
     {
       date: 'Fri • May 16, 2025',
       title: 'Creative Industries Forum',
-      blurb: 'Financing, distribution, and cross‑continental co‑production talks.',
+      blurb: 'Financing, distribution, and cross-continental co-production talks.',
     },
     {
       date: 'Sat • May 17, 2025',
@@ -92,14 +63,6 @@ const Home = () => {
     },
   ];
 
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setCurrentArtisan((prev) => (prev + 1) % artisans.length);
-    }, 4000);
-    return () => clearInterval(interval);
-  }, []);
-
-  // Motion variants
   const heroContainer = {
     hidden: {},
     visible: {
@@ -107,12 +70,12 @@ const Home = () => {
     },
   };
 
-  const heroItem = {
+  const heroItem: Variants = {
     hidden: { opacity: 0, y: 12 },
     visible: {
       opacity: 1,
       y: 0,
-      transition: { duration: 0.6, ease: [0.22, 1, 0.36, 1] },
+      transition: { duration: 0.6, ease: "easeInOut" },
     },
   };
 
@@ -123,12 +86,12 @@ const Home = () => {
     },
   };
 
-  const sectionItem = {
+  const sectionItem: Variants = {
     hidden: { opacity: 0, y: 10 },
     visible: {
       opacity: 1,
       y: 0,
-      transition: { duration: 0.55, ease: [0.22, 1, 0.36, 1] },
+      transition: { duration: 0.55, ease: "easeInOut" },
     },
   };
 
@@ -217,23 +180,23 @@ const Home = () => {
                 <motion.h2
                   initial={{ opacity: 0, y: 12 }}
                   whileInView={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+                  transition={{ duration: 0.6, ease: "easeInOut" }}
                   viewport={{ once: true, amount: 0.3 }}
                   className="md:col-span-7 text-4xl md:text-6xl leading-tight font-sans text-gray-900"
                 >
-                  A reimagined International Fair returns to Dakar in 2025. A landmark meeting point for film, design, music, and technology shaping the Pan‑African future.
+                  A reimagined International Fair returns to Dakar in 2025. A landmark meeting point for film, design, music, and technology shaping the Pan-African future.
                 </motion.h2>
 
                 {/* Supporting copy + CTA */}
                 <motion.div
                   initial={{ opacity: 0, y: 12 }}
                   whileInView={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.6, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
+                  transition={{ duration: 0.6, delay: 0.1, ease: "easeInOut" }}
                   viewport={{ once: true, amount: 0.3 }}
                   className="md:col-span-5 md:pl-6"
                 >
                   <p className="text-base md:text-lg text-gray-600 leading-relaxed">
-                    Hosted on the renovated grounds of the original Exhibition Centre, the 2025 Fair advances five core goals: Intellectual leadership in Pan‑African cultural discourse, economic diversification through creative industries, the
+                    Hosted on the renovated grounds of the original Exhibition Centre, the 2025 Fair advances five core goals: Intellectual leadership in Pan-African cultural discourse, economic diversification through creative industries, the
                     preservation and innovation of artisanal heritage, Digital Africa leadership, and education through cultural repatriation.
                   </p>
 
@@ -304,7 +267,7 @@ const Home = () => {
                     <motion.span
                       initial={{ width: '0%' }}
                       whileHover={{ width: '100%' }}
-                      transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
+                      transition={{ duration: 0.35, ease: "easeInOut" }}
                       className="absolute left-0 top-0 h-full"
                       style={{
                         background:

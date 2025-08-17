@@ -1,6 +1,6 @@
 'use client';
 
-import { motion, Variants } from 'framer-motion';
+import { motion, Transition, Variants } from 'framer-motion';
 import React from 'react';
 
 type Props = {
@@ -18,7 +18,7 @@ const overlayVariants: Variants = {
     tap: { width: '100%' },
 };
 
-const overlayTransition = { duration: 0.35, ease: [0.22, 1, 0.36, 1] };
+const overlayTransition: Transition = { duration: 0.35, ease: "easeInOut" };
 
 export default function AnimatedButton({
     children,
