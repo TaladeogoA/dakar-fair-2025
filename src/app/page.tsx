@@ -7,6 +7,8 @@ import MuseeLogo from '@/assets/partner-musee.png';
 import UcadLogo from '@/assets/partner-ucad.png';
 import ZeitzLogo from '@/assets/partner-zeitz.jpg';
 import Preloader from '@/components/Preloader';
+import CuratedPavilionSection from '@/components/sections/CuratedPavilionSection';
+import WhenWhereSection from '@/components/sections/WhenWhereSection';
 import AnimatedButton from '@/components/ui/AnimatedButton';
 import { motion, Variants } from 'framer-motion';
 import {
@@ -304,7 +306,8 @@ const Home = () => {
             </motion.div>
           </section>
 
-
+          <CuratedPavilionSection />
+          <WhenWhereSection />
 
           {/* Final CTA */}
           <section className="py-20 px-4" style={{ backgroundColor: '#F5E6D3' }}>
