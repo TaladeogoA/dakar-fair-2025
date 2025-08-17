@@ -30,6 +30,14 @@ type Dict = {
         travelNotes: string;
         transport: { dss: string; ter: string; shuttle: string; parking: string };
         accessibilityTitle: string;
+        badges: {
+            stepfree: string;
+            hearing: string;
+            quiet: string;
+            water: string;
+            wifi: string;
+            medical: string;
+        };
         notes: {
             fly: string;
             languages: string;
@@ -107,6 +115,14 @@ export const translations: Record<Locale, Dict> = {
                 parking: 'Parking sur place',
             },
             accessibilityTitle: 'ACCESSIBILITÉ ET SERVICES SUR PLACE',
+            badges: {
+                stepfree: 'Parcours sans obstacles',
+                hearing: 'Assistance auditive',
+                quiet: 'Salle calme',
+                water: 'Points d’eau',
+                wifi: 'Wi‑Fi gratuit',
+                medical: 'Service médical sur place',
+            },
             notes: {
                 fly:
                     'Arrivée à DSS (Blaise Diagne International). ~45–60 min de transfert vers le site.',
@@ -199,6 +215,14 @@ export const translations: Record<Locale, Dict> = {
                 parking: 'On‑site parking',
             },
             accessibilityTitle: 'ACCESSIBILITY & ON‑SITE SERVICES',
+            badges: {
+                stepfree: 'Step‑free routes',
+                hearing: 'Hearing assistance',
+                quiet: 'Quiet room',
+                water: 'Water stations',
+                wifi: 'Free Wi‑Fi',
+                medical: 'On‑site medical',
+            },
             notes: {
                 fly:
                     'Fly into DSS (Blaise Diagne International). ~45–60 min transfer to venue.',

@@ -43,6 +43,15 @@ export default function WhenWhereSection() {
     const { t } = useI18n();
     const reduceMotion = useReducedMotion();
 
+    const badges: { icon: LucideIcon; label: string }[] = [
+        { icon: Accessibility, label: t('whenwhere.badges.stepfree') },
+        { icon: Ear, label: t('whenwhere.badges.hearing') },
+        { icon: Moon, label: t('whenwhere.badges.quiet') },
+        { icon: Droplet, label: t('whenwhere.badges.water') },
+        { icon: Wifi, label: t('whenwhere.badges.wifi') },
+        { icon: Hospital, label: t('whenwhere.badges.medical') },
+    ];
+
     return (
         <section id="when-where" className="relative bg-white px-4 py-24">
             <div
@@ -210,12 +219,3 @@ export default function WhenWhereSection() {
         </section>
     );
 }
-
-const badges: { icon: LucideIcon; label: string }[] = [
-    { icon: Accessibility, label: 'Step‑free routes' },
-    { icon: Ear, label: 'Hearing assistance' },
-    { icon: Moon, label: 'Quiet room' },
-    { icon: Droplet, label: 'Water stations' },
-    { icon: Wifi, label: 'Free Wi‑Fi' },
-    { icon: Hospital, label: 'On‑site medical' },
-];
