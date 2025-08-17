@@ -32,7 +32,7 @@ export default function AnimatedButton({
         'relative inline-flex items-center justify-center rounded-sm px-6 md:px-8 py-3 md:py-3.5 text-sm md:text-base font-medium overflow-hidden focus:outline-none focus-visible:ring-2 focus-visible:ring-white/50 transition-colors';
 
     const primaryBtn =
-        'bg-[#2E5339] text-white/90 hover:text-white';
+        'bg-[#E67E22] text-white/90 hover:text-white';
     const primaryOverlay = 'bg-[#3A6A4D]';
 
     const secondaryBtn =
