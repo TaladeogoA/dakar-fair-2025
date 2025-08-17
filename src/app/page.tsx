@@ -1,5 +1,4 @@
 "use client";
-import Logo from '@/assets/logo.png';
 import AuLogo from '@/assets/partner-au.jpg';
 import AwhfLogo from '@/assets/partner-awhf.jpg';
 import GoogleArtsLogo from '@/assets/partner-googlearts.webp';
@@ -9,22 +8,13 @@ import ZeitzLogo from '@/assets/partner-zeitz.jpg';
 import Preloader from '@/components/Preloader';
 import AboutDakarSection from '@/components/sections/AboutDakarSection';
 import CuratedPavilionCarousel from '@/components/sections/CuratedPavilionCarousel';
+import HeroSection from '@/components/sections/HeroSection';
+import ProgramHighlightsSection from '@/components/sections/ProgramHighlightsSection';
 import WhenWhereSection from '@/components/sections/WhenWhereSection';
-import AnimatedButton from '@/components/ui/AnimatedButton';
-import { motion, Variants } from 'framer-motion';
-import {
-  ArrowUpRight,
-  Calendar,
-  X as CloseIcon,
-  Menu as MenuIcon
-} from 'lucide-react';
-import Image from 'next/image';
-import { useRef, useState } from 'react';
+import { useState } from 'react';
 
 const Home = () => {
-  const [menuOpen, setMenuOpen] = useState(false);
   const [loading, setLoading] = useState(true);
-  const videoRef = useRef<HTMLVideoElement>(null);
 
   const partnerLogos = [
     { src: MuseeLogo, alt: "Musée des Civilisations Noires" },
@@ -63,190 +53,14 @@ const Home = () => {
     },
   ];
 
-  const heroContainer = {
-    hidden: {},
-    visible: {
-      transition: { staggerChildren: 0.12, delayChildren: 0.1 },
-    },
-  };
-
-  const heroItem: Variants = {
-    hidden: { opacity: 0, y: 12 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: { duration: 0.6, ease: "easeInOut" },
-    },
-  };
-
-  const sectionContainer = {
-    hidden: {},
-    visible: {
-      transition: { staggerChildren: 0.08, delayChildren: 0.05 },
-    },
-  };
-
-  const sectionItem: Variants = {
-    hidden: { opacity: 0, y: 10 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: { duration: 0.55, ease: "easeInOut" },
-    },
-  };
-
   return (
     <>
       {loading && <Preloader onComplete={() => setLoading(false)} />}
       {!loading && (
         <div className="min-h-screen bg-white">
-          {/* Hero Section */}
-          <section className="relative h-screen overflow-hidden">
-            {/* Sliding hero content (video + overlay + center content) */}
-            <div className={`absolute inset-0 transition-transform duration-500 ease-in-out ${menuOpen ? 'translate-y-full' : 'translate-y-0'}`}>
-              <video
-                ref={videoRef}
-                className="absolute inset-0 w-full h-full object-cover"
-                src="/videos/output.mp4"
-                autoPlay
-                muted
-                loop
-                playsInline
-                preload="auto"
-                poster="/videos/poster.jpg"
-              />
-              <div className="absolute inset-0 bg-black/50" />
-              {/* Hero content block — align bottom-left */}
-              <motion.div className="relative z-10 h-full" initial="hidden" animate="visible" variants={heroContainer}>
-                <div className="absolute bottom-0 left-0 w-full px-4 md:px-10 pb-10 md:pb-14 max-w-5xl">
-                  <motion.h1 variants={heroItem} className="text-left text-white font-serif leading-[1.05] text-5xl md:text-7xl">
-                    Dakar 2025: The Pan-African Arts Renaissance
-                  </motion.h1>
-
-                  <motion.p variants={heroItem} className="mt-4 md:mt-6 text-left text-white/90 text-lg md:text-xl max-w-2xl">
-                    Five days of art, dialogue, and innovation — reimagining Dakar&apos;s legacy as the cultural capital of Africa.
-                  </motion.p>
-
-                  <motion.div variants={heroItem} className="mt-6 md:mt-8 flex items-center gap-4">
-                    <AnimatedButton variant="primary">Register Now</AnimatedButton>
-                    <AnimatedButton variant="secondary">Explore Program</AnimatedButton>
-                  </motion.div>
-                </div>
-              </motion.div>
-            </div>
-
-            {/* Full-page menu panel (slides down) */}
-            <div className={`absolute inset-0 z-10 bg-[#F4F1EB] transition-transform duration-500 ease-in-out ${menuOpen ? 'translate-y-0' : '-translate-y-full'}`}>
-              <nav className="h-full w-full flex items-center justify-center">
-                <ul className="text-[#2C2C2C] text-3xl md:text-5xl font-serif space-y-6 text-center">
-                  <li>Exhibitions</li>
-                  <li>Learning and research</li>
-                  <li>Another one</li>
-                  <li>Etc</li>
-                </ul>
-              </nav>
-            </div>
-
-            {/* Top bar */}
-            <header className="absolute top-0 left-0 w-full z-20">
-              <div className="relative h-60">
-                {/* Logo top-left */}
-                <div className="absolute top-0 left-4">
-                  <Image src={Logo} alt="Festival logo" priority width={0} height={0} sizes="200px" className="h-16 w-auto object-contain mt-4" />
-                </div>
-
-                <button
-                  type="button"
-                  aria-expanded={menuOpen}
-                  aria-controls="primary-menu"
-                  onClick={() => setMenuOpen((v) => !v)}
-                  className="absolute left-1/2 top-6 -translate-x-1/2 flex items-center gap-2 focus:outline-none cursor-pointer"
-                >
-                  <span className={`transition-colors ${menuOpen ? 'text-[#2C2C2C]' : 'text-white'}`}>
-                    {menuOpen ? <CloseIcon className="w-6 h-6 transition-transform duration-300 rotate-90" /> : <MenuIcon className="w-6 h-6 transition-transform duration-300 rotate-0" />}
-                  </span>
-                  <span className={`text-sm tracking-[0.35em] transition-colors ${menuOpen ? 'text-[#2C2C2C]' : 'text-white'}`}>MENU</span>
-                </button>
-              </div>
-            </header>
-          </section>
-
+          <HeroSection />
           <AboutDakarSection partnerLogos={partnerLogos} />
-
-          {/* Program Highlights (Agenda at a glance) */}
-          <section id="program" className="py-24 px-4 bg-white">
-            <motion.div
-              className="max-w-7xl mx-auto"
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: true, amount: 0.25 }}
-              variants={sectionContainer}
-            >
-              {/* Kicker + heading */}
-              <motion.div variants={sectionItem}>
-                <div className="flex items-center gap-3">
-                  <span className="inline-block h-1 w-12 rounded-full" style={{ backgroundColor: '#E67E22' }} />
-                  <span className="uppercase tracking-[0.2em] text-xs" style={{ color: '#2E5339' }}>
-                    Agenda at a glance
-                  </span>
-                </div>
-                <h3 className="mt-6 text-3xl md:text-5xl font-serif text-gray-900">Program Highlights</h3>
-                <p className="mt-3 text-gray-600 max-w-2xl">
-                  Five days hosted at the renovated Exhibition Centre in Dakar — film premieres, forums, ateliers, and a closing gala.
-                </p>
-              </motion.div>
-
-              {/* Cards */}
-              <div className="mt-10 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6">
-                {highlights.map((item, idx) => (
-                  <motion.a
-                    key={idx}
-                    href="#agenda"
-                    variants={sectionItem}
-                    whileHover={{ y: -2 }}
-                    className="group relative overflow-hidden rounded-xl border border-gray-200 bg-white/80 backdrop-blur-sm p-5"
-                  >
-                    {/* hover overlay */}
-                    <motion.span
-                      initial={{ width: '0%' }}
-                      whileHover={{ width: '100%' }}
-                      transition={{ duration: 0.35, ease: "easeInOut" }}
-                      className="absolute left-0 top-0 h-full"
-                      style={{
-                        background:
-                          'linear-gradient(90deg, rgba(46,83,57,0.08) 0%, rgba(46,83,57,0.03) 100%)',
-                        zIndex: 0,
-                      }}
-                    />
-                    {/* top accent line */}
-                    <span className="absolute left-0 top-0 w-full h-[3px]" style={{ backgroundColor: idx === 0 ? '#E67E22' : '#2E5339', opacity: idx === 0 ? 1 : 0.8 }} />
-
-                    <div className="relative z-10">
-                      <div className="flex items-center gap-2 text-sm text-gray-700">
-                        <Calendar className="w-4 h-4" style={{ color: '#2E5339' }} />
-                        <span>{item.date}</span>
-                      </div>
-                      <h4 className="mt-3 text-lg font-semibold text-gray-900">{item.title}</h4>
-                      <p className="mt-2 text-sm text-gray-600">{item.blurb}</p>
-
-                      <div className="mt-4 inline-flex items-center gap-2 text-sm" style={{ color: '#2E5339' }}>
-                        <span className="tracking-widest">EXPLORE</span>
-                        <ArrowUpRight className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
-                      </div>
-                    </div>
-                  </motion.a>
-                ))}
-              </div>
-
-              {/* CTA */}
-              <motion.div variants={sectionItem} className="mt-12 text-center">
-                <AnimatedButton variant="primary" className="px-8">
-                  View full agenda
-                </AnimatedButton>
-              </motion.div>
-            </motion.div>
-          </section>
-
+          <ProgramHighlightsSection highlights={highlights} />
           <CuratedPavilionCarousel />
           <WhenWhereSection />
 

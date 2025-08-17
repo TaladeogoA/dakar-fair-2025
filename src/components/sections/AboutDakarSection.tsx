@@ -65,10 +65,9 @@ export default function AboutDakarSection({ partnerLogos }: Props) {
                     </motion.h2>
 
                     <motion.div variants={item} className="md:col-span-5 md:pl-6">
-                        <HoverHighlightText
-                            className="block text-base md:text-lg text-white leading-relaxed"
-                            text="Hosted on the renovated grounds of the original Exhibition Centre, the 2025 Fair advances five core goals: Intellectual leadership in Pan-African cultural discourse, economic diversification through creative industries, the preservation and innovation of artisanal heritage, Digital Africa leadership, and education through cultural repatriation."
-                        />
+                        <p className="text-base md:text-lg text-white leading-relaxed">
+                            Hosted on the renovated grounds of the original Exhibition Centre, the 2025 Fair advances five core goals: Intellectual leadership in Pan-African cultural discourse, economic diversification through creative industries, the preservation and innovation of artisanal heritage, Digital Africa leadership, and education through cultural repatriation.
+                        </p>
 
                         <a
                             href="#program"
