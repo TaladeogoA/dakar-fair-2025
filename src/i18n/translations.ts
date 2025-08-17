@@ -1,5 +1,16 @@
 export type Locale = 'fr' | 'en';
 
+type WhatsItem = {
+    id: string;
+    category: string;
+    title: string;
+    venue: string;
+    dateLine: string;
+    summary: string;
+    image: string;
+    alt: string;
+};
+
 type Dict = {
     nav: {
         menu: string;
@@ -8,13 +19,7 @@ type Dict = {
     };
     hero: { title: string; subtitle: string; register: string; explore: string };
     about: { lede: string; supporting: string; cta: string };
-    program: {
-        kicker: string;
-        title: string;
-        desc: string;
-        explore: string;
-        cta: string;
-    };
+    program: { kicker: string; title: string; desc: string; explore: string; cta: string };
     curated: { kicker: string; title: string; desc: string; cta: string };
     featured: { kicker: string; ambience: string; slowCuts: string };
     whenwhere: {
@@ -38,12 +43,13 @@ type Dict = {
             wifi: string;
             medical: string;
         };
-        notes: {
-            fly: string;
-            languages: string;
-            info: string;
-            rides: string;
-        };
+        notes: { fly: string; languages: string; info: string; rides: string };
+    };
+    whats: {
+        title: string;
+        intro: string;
+        readMore: string;
+        events: WhatsItem[];
     };
     highlights: Array<{ date: string; title: string; blurb: string }>;
 };
@@ -134,86 +140,181 @@ export const translations: Record<Locale, Dict> = {
                     'VTC et taxis à compteur sur site. Service de navette aux heures de pointe.',
             },
         },
+        whats: {
+            title: 'Quoi de neuf',
+            intro: 'Rejoignez‑nous pour des expositions, événements, talks, concerts et projets publics.',
+            readMore: 'En savoir plus',
+            events: [
+                {
+                    id: 'e1',
+                    category: 'Exposition',
+                    title: 'Forêts de mémoire: installation monumentale',
+                    venue: 'Grand Hall — Centre d’Exposition',
+                    dateLine: '15–19 mai 2025',
+                    summary: 'Sculptures en bois récupéré et textures sonores immersives sur la mémoire écologique.',
+                    image: '/images/news/forests-memory.jpg',
+                    alt: 'Installation monumentale en bois dans une grande salle',
+                },
+                {
+                    id: 'e2',
+                    category: 'Pavillon',
+                    title: 'Pavillon 2025: Capsule du temps',
+                    venue: 'Pavillon central — Jardins',
+                    dateLine: 'Ouvert tous les jours',
+                    summary: 'Une architecture légère, terre et métal, imaginée comme archive vivante.',
+                    image: '/images/news/pavilion-aerial.jpg',
+                    alt: 'Vue aérienne d’un pavillon au milieu de jardins',
+                },
+                {
+                    id: 'e3',
+                    category: 'Art public',
+                    title: 'Mur de motifs Ndebele par des artisanes',
+                    venue: 'Jardin Nord',
+                    dateLine: '15 mai – 28 septembre 2025',
+                    summary: 'Peinture murale collaborative célébrant les géométries d’Afrique australe.',
+                    image: '/images/news/ndebele-wall.jpg',
+                    alt: 'Grand mural coloré aux motifs géométriques',
+                },
+                {
+                    id: 'e4',
+                    category: 'Live',
+                    title: 'Soirée d’ouverture: musique & poésie',
+                    venue: 'Scène extérieure',
+                    dateLine: 'Jeu 15 mai, 20h–23h',
+                    summary: 'Créations inédites mêlant kora, électro et spoken word.',
+                    image: '/images/news/opening-stage.jpeg',
+                    alt: 'Concert en plein air au crépuscule',
+                },
+                {
+                    id: 'e5',
+                    category: 'Projection',
+                    title: 'Première: Cinéma des archipels',
+                    venue: 'Auditorium',
+                    dateLine: 'Ven 16 mai, 19h',
+                    summary: 'Film essai sur diasporas et littoraux, suivi d’une discussion.',
+                    image: '/images/news/screening.avif',
+                    alt: 'Salle de cinéma pendant une projection',
+                },
+                {
+                    id: 'e6',
+                    category: 'Atelier',
+                    title: 'Tissage numérique — code & textile',
+                    venue: 'Aile des Ateliers',
+                    dateLine: 'Chaque matin, 10h–12h',
+                    summary: 'De la matrice au métier: initiation au jacquard assisté par code.',
+                    image: '/images/news/weaving.avif',
+                    alt: 'Atelier de tissage avec métier à tisser',
+                },
+                {
+                    id: 'e7',
+                    category: 'Forum',
+                    title: 'Financer les industries créatives',
+                    venue: 'Forum Hall',
+                    dateLine: 'Ven 16 mai, 11h–13h',
+                    summary: 'Investissement, coproductions et nouveaux modèles pour l’audiovisuel.',
+                    image: '/images/news/panel-forum.jpg',
+                    alt: 'Table ronde avec intervenants et public',
+                },
+                {
+                    id: 'e8',
+                    category: 'Design',
+                    title: 'Marché des designers: matières locales',
+                    venue: 'Halle — Marché du Design',
+                    dateLine: '16–18 mai, 12h–18h',
+                    summary: 'Objets, mobilier et mode issus de filières responsables.',
+                    image: '/images/news/design-market.jpeg',
+                    alt: 'Stands de marché avec objets de design',
+                },
+                {
+                    id: 'e9',
+                    category: 'Talk',
+                    title: 'Conversation: archives et restitutions',
+                    venue: 'Salon des Idées',
+                    dateLine: 'Sam 17 mai, 14h',
+                    summary: 'Chercheur·euses et artistes autour des politiques de mémoire.',
+                    image: '/images/news/archives-talk.webp',
+                    alt: 'Conférence avec intervenants sur scène',
+                },
+                {
+                    id: 'e10',
+                    category: 'Musique',
+                    title: 'Nuit des percussions atlantiques',
+                    venue: 'Esplanade',
+                    dateLine: 'Sam 17 mai, 21h–01h',
+                    summary: 'Dialogues entre sabar, batá et rythmes électroniques.',
+                    image: '/images/news/percussion.jpg',
+                    alt: 'Percussionnistes sur scène de nuit',
+                },
+                {
+                    id: 'e11',
+                    category: 'Masterclass',
+                    title: 'Photographie: lumière et mémoire',
+                    venue: 'Studio 2',
+                    dateLine: 'Dim 18 mai, 11h',
+                    summary: 'Pratique documentaire, archives familiales et tirages alternatifs.',
+                    image: '/images/news/photo-class.jpg',
+                    alt: 'Atelier de photographie en studio',
+                },
+                {
+                    id: 'e12',
+                    category: 'Clôture',
+                    title: 'Gala — Cercles et constellations',
+                    venue: 'Grand Hall',
+                    dateLine: 'Lun 19 mai, 19h',
+                    summary: 'Célébration finale: performances, projections et DJ set.',
+                    image: '/images/news/closing-gala.jpg',
+                    alt: 'Gala de clôture dans une grande salle',
+                },
+            ],
+        },
         highlights: [
-            {
-                date: 'Jeu • 15 mai 2025',
-                title: 'Première de la soirée d’ouverture',
-                blurb:
-                    'Avant‑première avec tapis rouge et concert d’accueil au Grand Hall du Centre d’Exposition.',
-            },
-            {
-                date: 'Ven • 16 mai 2025',
-                title: 'Forum des industries créatives',
-                blurb:
-                    'Financement, distribution et co‑productions transcontinentales.',
-            },
+            { date: 'Jeu • 15 mai 2025', title: 'Première de la soirée d’ouverture', blurb: 'Avant‑première avec tapis rouge et concert d’accueil au Grand Hall du Centre d’Exposition.' },
+            { date: 'Ven • 16 mai 2025', title: 'Forum des industries créatives', blurb: 'Financement, distribution et co‑productions transcontinentales.' },
         ],
     },
     en: {
         nav: {
             menu: 'MENU',
-            items: {
-                exhibitions: 'Exhibitions',
-                learning: 'Learning and research',
-                another: 'Another one',
-                etc: 'Etc',
-            },
+            items: { exhibitions: 'Exhibitions', learning: 'Learning and research', another: 'Another one', etc: 'Etc' },
             langShort: { fr: 'FR', en: 'EN' },
         },
         hero: {
             title: 'Dakar 2025: The Pan-African Arts Renaissance',
-            subtitle:
-                "Five days of art, dialogue, and innovation — reimagining Dakar's legacy as the cultural capital of Africa.",
+            subtitle: "Five days of art, dialogue, and innovation — reimagining Dakar's legacy as the cultural capital of Africa.",
             register: 'Register Now',
             explore: 'Explore Program',
         },
         about: {
-            lede:
-                "A reimagined International Fair returns to Dakar in 2025. A landmark meeting point for film, design, music, and technology shaping the Pan-African future.",
-            supporting:
-                "Hosted on the renovated grounds of the original Exhibition Centre, the 2025 Fair advances five core goals: Intellectual leadership in Pan-African cultural discourse, economic diversification through creative industries, the preservation and innovation of artisanal heritage, Digital Africa leadership, and education through cultural repatriation.",
+            lede: "A reimagined International Fair returns to Dakar in 2025. A landmark meeting point for film, design, music, and technology shaping the Pan-African future.",
+            supporting: "Hosted on the renovated grounds of the original Exhibition Centre, the 2025 Fair advances five core goals: Intellectual leadership in Pan-African cultural discourse, economic diversification through creative industries, the preservation and innovation of artisanal heritage, Digital Africa leadership, and education through cultural repatriation.",
             cta: 'ABOUT THE FAIR',
         },
         program: {
             kicker: 'Agenda at a glance',
             title: 'Program Highlights',
-            desc:
-                'Five days hosted at the renovated Exhibition Centre in Dakar — film premieres, forums, ateliers, and a closing gala.',
+            desc: 'Five days hosted at the renovated Exhibition Centre in Dakar — film premieres, forums, ateliers, and a closing gala.',
             explore: 'EXPLORE',
             cta: 'View full agenda',
         },
         curated: {
             kicker: 'Special Exhibition',
             title: 'Curated Pavilion 2025',
-            desc:
-                'A living archive: large‑scale artworks, pavilion renderings, and archival/modern juxtapositions.',
+            desc: 'A living archive: large‑scale artworks, pavilion renderings, and archival/modern juxtapositions.',
             cta: 'Explore Pavilion',
         },
-        featured: {
-            kicker: 'Featured Voices',
-            ambience: 'Ambience — Dakar',
-            slowCuts: 'Slow cuts',
-        },
+        featured: { kicker: 'Featured Voices', ambience: 'Ambience — Dakar', slowCuts: 'Slow cuts' },
         whenwhere: {
             kicker: 'When & Where',
             title: 'Dates, Venue and Getting Here',
-            desc:
-                'Hosted at the renovated Exhibition Centre in Dakar — designed for accessibility, discovery, and a seamless visitor experience.',
+            desc: 'Hosted at the renovated Exhibition Centre in Dakar — designed for accessibility, discovery, and a seamless visitor experience.',
             datesCardTitle: '15–19 May 2025',
-            datesCardDesc:
-                'Five days of exhibitions, forums, workshops and performances.',
+            datesCardDesc: 'Five days of exhibitions, forums, workshops and performances.',
             venueTitle: 'Exhibition Centre, Dakar',
-            venueDesc:
-                'Renovated grounds of the original Exhibition Centre. Almadies district, Dakar.',
+            venueDesc: 'Renovated grounds of the original Exhibition Centre. Almadies district, Dakar.',
             directions: 'Get directions',
             planTravel: 'PLAN YOUR TRAVEL',
             travelNotes: 'QUICK TRAVEL NOTES',
-            transport: {
-                dss: 'DSS 45–60 min',
-                ter: 'TER to Dakar',
-                shuttle: 'Shuttle Service',
-                parking: 'On‑site parking',
-            },
+            transport: { dss: 'DSS 45–60 min', ter: 'TER to Dakar', shuttle: 'Shuttle Service', parking: 'On‑site parking' },
             accessibilityTitle: 'ACCESSIBILITY & ON‑SITE SERVICES',
             badges: {
                 stepfree: 'Step‑free routes',
@@ -224,29 +325,142 @@ export const translations: Record<Locale, Dict> = {
                 medical: 'On‑site medical',
             },
             notes: {
-                fly:
-                    'Fly into DSS (Blaise Diagne International). ~45–60 min transfer to venue.',
-                languages:
-                    'Languages: French, Wolof. English widely understood in venues.',
-                info:
-                    'Currency: XOF (CFA). Power: 230V Type C/E. eSIM available.',
-                rides:
-                    'Rideshare and metered taxis on-site. Shuttle service during peak hours.',
+                fly: 'Fly into DSS (Blaise Diagne International). ~45–60 min transfer to venue.',
+                languages: 'Languages: French, Wolof. English widely understood in venues.',
+                info: 'Currency: XOF (CFA). Power: 230V Type C/E. eSIM available.',
+                rides: 'Rideshare and metered taxis on-site. Shuttle service during peak hours.',
             },
         },
+        whats: {
+            title: "What's happening",
+            intro: 'Join us for exhibitions, events, talks, concerts and public art projects.',
+            readMore: 'Read more',
+            events: [
+                {
+                    id: 'e1',
+                    category: 'Exhibition',
+                    title: 'Forests of Memory: Monumental Installation',
+                    venue: 'Grand Hall — Exhibition Centre',
+                    dateLine: '15–19 May 2025',
+                    summary: 'Salvaged wood sculptures with immersive sound on ecological memory.',
+                    image: '/images/news/forests-memory.jpg',
+                    alt: 'Monumental wooden installation in a large hall',
+                },
+                {
+                    id: 'e2',
+                    category: 'Pavilion',
+                    title: 'Pavilion 2025: A Capsule in Time',
+                    venue: 'Central Pavilion — Gardens',
+                    dateLine: 'Open daily',
+                    summary: 'Lightweight architecture in earth and metal as a living archive.',
+                    image: '/images/news/pavilion-aerial.jpg',
+                    alt: 'Aerial view of a pavilion among gardens',
+                },
+                {
+                    id: 'e3',
+                    category: 'Public Art',
+                    title: 'Ndebele Pattern Wall by Women Artisans',
+                    venue: 'North Garden',
+                    dateLine: '15 May – 28 September 2025',
+                    summary: 'Collaborative mural celebrating Southern African geometries.',
+                    image: '/images/news/ndebele-wall.jpg',
+                    alt: 'Large colorful geometric mural',
+                },
+                {
+                    id: 'e4',
+                    category: 'Live',
+                    title: 'Opening Night: Music & Poetry',
+                    venue: 'Outdoor Stage',
+                    dateLine: 'Thu 15 May, 8–11pm',
+                    summary: 'New works fusing kora, electronics and spoken word.',
+                    image: '/images/news/opening-stage.jpeg',
+                    alt: 'Outdoor concert at dusk',
+                },
+                {
+                    id: 'e5',
+                    category: 'Screening',
+                    title: 'Premiere: Cinema of Archipelagos',
+                    venue: 'Auditorium',
+                    dateLine: 'Fri 16 May, 7pm',
+                    summary: 'Essay film on diasporas and shorelines, with Q&A.',
+                    image: '/images/news/screening.avif',
+                    alt: 'Cinema screening with audience',
+                },
+                {
+                    id: 'e6',
+                    category: 'Workshop',
+                    title: 'Digital Weaving — Code & Textile',
+                    venue: 'Atelier Wing',
+                    dateLine: 'Daily, 10am–12pm',
+                    summary: 'From matrix to loom: intro to code‑assisted jacquard.',
+                    image: '/images/news/weaving.avif',
+                    alt: 'Weaving workshop at a loom',
+                },
+                {
+                    id: 'e7',
+                    category: 'Forum',
+                    title: 'Financing Creative Industries',
+                    venue: 'Forum Hall',
+                    dateLine: 'Fri 16 May, 11am–1pm',
+                    summary: 'Investment, co‑productions and new models in audiovisual.',
+                    image: '/images/news/panel-forum.jpg',
+                    alt: 'Panel discussion on stage',
+                },
+                {
+                    id: 'e8',
+                    category: 'Design',
+                    title: 'Design Market: Local Materials',
+                    venue: 'Design Market Hall',
+                    dateLine: '16–18 May, 12–6pm',
+                    summary: 'Objects, furniture and fashion from responsible supply chains.',
+                    image: '/images/news/design-market.jpeg',
+                    alt: 'Design market stalls',
+                },
+                {
+                    id: 'e9',
+                    category: 'Talk',
+                    title: 'Conversation: Archives and Restitutions',
+                    venue: 'Salon of Ideas',
+                    dateLine: 'Sat 17 May, 2pm',
+                    summary: 'Researchers and artists on policies of memory.',
+                    image: '/images/news/archives-talk.webp',
+                    alt: 'Talk session with speakers on stage',
+                },
+                {
+                    id: 'e10',
+                    category: 'Music',
+                    title: 'Atlantic Percussion Night',
+                    venue: 'Esplanade',
+                    dateLine: 'Sat 17 May, 9pm–1am',
+                    summary: 'Dialogues between sabar, batá and electronic rhythms.',
+                    image: '/images/news/percussion.jpg',
+                    alt: 'Percussionists performing outdoors at night',
+                },
+                {
+                    id: 'e11',
+                    category: 'Masterclass',
+                    title: 'Photography: Light and Memory',
+                    venue: 'Studio 2',
+                    dateLine: 'Sun 18 May, 11am',
+                    summary: 'Documentary practice, family archives and alternative prints.',
+                    image: '/images/news/photo-class.jpg',
+                    alt: 'Photography workshop in studio',
+                },
+                {
+                    id: 'e12',
+                    category: 'Closing',
+                    title: 'Gala — Circles and Constellations',
+                    venue: 'Grand Hall',
+                    dateLine: 'Mon 19 May, 7pm',
+                    summary: 'Final celebration with performances, projections and DJ set.',
+                    image: '/images/news/closing-gala.jpg',
+                    alt: 'Closing gala in a large hall',
+                },
+            ],
+        },
         highlights: [
-            {
-                date: 'Thu • May 15, 2025',
-                title: 'Opening Night Premiere',
-                blurb:
-                    'Red-carpet screening and welcome concert at the Exhibition Centre Grand Hall.',
-            },
-            {
-                date: 'Fri • May 16, 2025',
-                title: 'Creative Industries Forum',
-                blurb:
-                    'Financing, distribution, and cross-continental co-production talks.',
-            },
+            { date: 'Thu • May 15, 2025', title: 'Opening Night Premiere', blurb: 'Red-carpet screening and welcome concert at the Exhibition Centre Grand Hall.' },
+            { date: 'Fri • May 16, 2025', title: 'Creative Industries Forum', blurb: 'Financing, distribution, and cross-continental co-production talks.' },
         ],
     },
 };

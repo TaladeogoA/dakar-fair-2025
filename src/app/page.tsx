@@ -10,6 +10,7 @@ import AboutDakarSection from '@/components/sections/AboutDakarSection';
 import CuratedPavilionCarousel from '@/components/sections/CuratedPavilionCarousel';
 import HeroSection from '@/components/sections/HeroSection';
 import ProgramHighlightsSection from '@/components/sections/ProgramHighlightsSection';
+import WhatsHappeningSection from '@/components/sections/WhatsHappeningSection';
 import WhenWhereSection from '@/components/sections/WhenWhereSection';
 import { useI18n } from '@/i18n/I18nProvider';
 import { translations } from '@/i18n/translations';
@@ -29,6 +30,7 @@ const Home = () => {
   ];
 
   const highlights = useMemo(() => translations[locale].highlights, [locale]);
+  const whatsItems = useMemo(() => translations[locale].whats.events, [locale]);
 
   return (
     <>
@@ -38,6 +40,7 @@ const Home = () => {
           <HeroSection />
           <AboutDakarSection partnerLogos={partnerLogos} />
           <ProgramHighlightsSection highlights={highlights} />
+          <WhatsHappeningSection items={whatsItems} />
           <CuratedPavilionCarousel />
           <WhenWhereSection />
 

@@ -31,3 +31,12 @@
     @apply font-serif;
   }
 }
+
+@import 'slick-carousel/slick/slick.css';
+@import 'slick-carousel/slick/slick-theme.css';
+
+#whats-happening .slick-slider { position: relative; }
+#whats-happening .slick-list { overflow: hidden; }
+#whats-happening .slick-track { display: flex; gap: 0; }
+#whats-happening .slick-arrow,
+#whats-happening .slick-dots { display: none !important; }
