@@ -1,6 +1,7 @@
 "use client";
 import Logo from '@/assets/logo.png';
 import Preloader from '@/components/Preloader';
+import AnimatedButton from '@/components/ui/AnimatedButton';
 import { motion } from 'framer-motion';
 import { Calendar, X as CloseIcon, Globe, Heart, Lightbulb, Mail, MapPin, Menu as MenuIcon, Palette, Phone, Users } from 'lucide-react';
 import Image from 'next/image';
@@ -105,25 +106,13 @@ const Home = () => {
                     variants={heroItem}
                     className="mt-6 md:mt-8 flex items-center gap-4"
                   >
-                    <motion.button
-                      whileHover={{ scale: 1.02 }}
-                      whileTap={{ scale: 0.98 }}
-                      className="rounded-full bg-white/90 hover:bg-white text-black
-                   px-6 md:px-8 py-3 md:py-3.5 text-sm md:text-base font-medium
-                   shadow-sm backdrop-blur-sm transition-colors"
-                    >
+                    <AnimatedButton variant="primary">
                       Register Now
-                    </motion.button>
+                    </AnimatedButton>
 
-                    <motion.button
-                      whileHover={{ scale: 1.02 }}
-                      whileTap={{ scale: 0.98 }}
-                      className="rounded-full border border-white/80 text-white hover:bg-white/10
-                   px-6 md:px-8 py-3 text-sm md:text-base font-medium
-                   transition-colors"
-                    >
+                    <AnimatedButton variant="secondary">
                       Explore Program
-                    </motion.button>
+                    </AnimatedButton>
                   </motion.div>
                 </div>
               </motion.div>

@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { DM_Serif_Display, Inter } from 'next/font/google';
+import { Space_Grotesk, Work_Sans } from 'next/font/google';
 import "./globals.css";
 
 export const metadata: Metadata = {
@@ -7,13 +7,13 @@ export const metadata: Metadata = {
   description: 'Pan-African Arts Renaissance',
 };
 
-const heading = DM_Serif_Display({
+const heading = Space_Grotesk({
   subsets: ['latin'],
   weight: '400',
   variable: '--font-heading',
 });
 
-const body = Inter({
+const body = Work_Sans({
   subsets: ['latin'],
   variable: '--font-body',
 });
