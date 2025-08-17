@@ -1,8 +1,9 @@
 'use client';
 
 import AnimatedButton from '@/components/ui/AnimatedButton';
-import { motion, Variants } from 'framer-motion';
+import { easeInOut, motion, useAnimationControls, Variants } from 'framer-motion';
 import { ArrowUpRight, Calendar } from 'lucide-react';
+import { RefCallback, useEffect, useMemo, useRef, useState } from 'react';
 
 export type Highlight = {
     date: string;
@@ -22,11 +23,151 @@ const sectionItem: Variants = {
     visible: {
         opacity: 1,
         y: 0,
-        transition: { duration: 0.55, ease: 'easeInOut' },
+        transition: { duration: 0.55, ease: easeInOut },
     },
 };
 
 export default function ProgramHighlightsSection({ highlights }: { highlights: Highlight[] }) {
+    const [currentIndex, setCurrentIndex] = useState(0);
+    const prevIndexRef = useRef(0);
+    const containerRef = useRef<HTMLDivElement | null>(null);
+    const itemRefs = useRef<Array<HTMLLIElement | null>>([]);
+    const dotRefs = useRef<Array<HTMLDivElement | null>>([]);
+    const [dotPositions, setDotPositions] = useState<number[]>([]);
+    const indicatorControls = useAnimationControls();
+    const isAnimatingRef = useRef(false);
+    const pendingIndexRef = useRef<number | null>(null);
+    const manualOverrideRef = useRef(false);
+    const manualTimerRef = useRef<number | null>(null);
+
+    const stepDuration = 0.12;
+
+    const setItemRefAt = (index: number): RefCallback<HTMLLIElement> => (el) => {
+        itemRefs.current[index] = el;
+    };
+    const setDotRefAt = (index: number): RefCallback<HTMLDivElement> => (el) => {
+        dotRefs.current[index] = el;
+    };
+
+    const measureDots = () => {
+        if (!containerRef.current) return;
+        const cRect = containerRef.current.getBoundingClientRect();
+        const positions = dotRefs.current.map((el) => {
+            if (!el) return 0;
+            const r = el.getBoundingClientRect();
+            return r.top - cRect.top + r.height / 2;
+        });
+        setDotPositions(positions);
+    };
+
+    const setManualOverride = () => {
+        manualOverrideRef.current = true;
+        if (manualTimerRef.current) window.clearTimeout(manualTimerRef.current);
+        manualTimerRef.current = window.setTimeout(() => {
+            manualOverrideRef.current = false;
+        }, 1200);
+    };
+
+    const moveIndicator = async (nextIndex: number, source: 'manual' | 'observer' = 'manual') => {
+        if (nextIndex === prevIndexRef.current) return;
+        if (source === 'observer' && manualOverrideRef.current) return;
+        if (source === 'manual') setManualOverride();
+
+        if (isAnimatingRef.current) {
+            pendingIndexRef.current = nextIndex;
+            return;
+        }
+
+        isAnimatingRef.current = true;
+
+        const from = prevIndexRef.current;
+        const dir = nextIndex > from ? 1 : -1;
+        const indexes: number[] = [];
+        for (let i = from; dir > 0 ? i <= nextIndex : i >= nextIndex; i += dir) indexes.push(i);
+        const positions = indexes.map((i) => dotPositions[i] ?? 0);
+        const len = Math.max(positions.length - 1, 1);
+        const times = positions.map((_, i) => (len === 0 ? 1 : i / len));
+
+        await indicatorControls.start({
+            y: positions,
+            transition: { ease: 'linear', duration: len * stepDuration, times },
+        });
+
+        prevIndexRef.current = nextIndex;
+        setCurrentIndex(nextIndex);
+        isAnimatingRef.current = false;
+
+        if (pendingIndexRef.current !== null && pendingIndexRef.current !== nextIndex) {
+            const target = pendingIndexRef.current;
+            pendingIndexRef.current = null;
+            void moveIndicator(target, 'manual');
+        } else {
+            pendingIndexRef.current = null;
+        }
+    };
+
+    useEffect(() => {
+        measureDots();
+        const ro = new ResizeObserver(() => measureDots());
+        if (containerRef.current) ro.observe(containerRef.current);
+        const onScroll = () => measureDots();
+        window.addEventListener('scroll', onScroll, { passive: true });
+        window.addEventListener('resize', measureDots, { passive: true });
+        return () => {
+            ro.disconnect();
+            window.removeEventListener('scroll', onScroll);
+            window.removeEventListener('resize', measureDots);
+        };
+    }, []);
+
+    useEffect(() => {
+        if (!dotPositions.length) return;
+        if (!isAnimatingRef.current) {
+            indicatorControls.set({ y: dotPositions[currentIndex] ?? 0 });
+        }
+    }, [dotPositions, currentIndex, indicatorControls]);
+
+    useEffect(() => {
+        const items = itemRefs.current.filter((el): el is HTMLLIElement => !!el);
+        if (!items.length) return;
+        const observer = new IntersectionObserver(
+            (entries) => {
+                let bestIdx = prevIndexRef.current;
+                let bestRatio = 0;
+                entries.forEach((e) => {
+                    const idxAttr = (e.target as HTMLElement).dataset.index;
+                    const idx = idxAttr ? Number(idxAttr) : 0;
+                    if (e.intersectionRatio > bestRatio) {
+                        bestRatio = e.intersectionRatio;
+                        bestIdx = idx;
+                    }
+                });
+                if (bestRatio >= 0.55) void moveIndicator(bestIdx, 'observer');
+            },
+            { root: null, threshold: [0, 0.25, 0.55, 0.75, 1] }
+        );
+        items.forEach((el) => observer.observe(el));
+        return () => observer.disconnect();
+    }, [highlights.length, dotPositions]);
+
+    const header = useMemo(
+        () => (
+            <motion.div variants={sectionItem} className="text-center">
+                <div className="flex items-center justify-center gap-3">
+                    <span className="inline-block h-1 w-12 rounded-full" style={{ backgroundColor: '#E67E22' }} />
+                    <span className="uppercase tracking-[0.2em] text-xs" style={{ color: '#2E5339' }}>
+                        Agenda at a glance
+                    </span>
+                </div>
+                <h3 className="mt-6 text-3xl md:text-5xl font-serif text-gray-900">Program Highlights</h3>
+                <p className="mt-3 text-gray-600 max-w-2xl mx-auto">
+                    Five days hosted at the renovated Exhibition Centre in Dakar — film premieres, forums, ateliers, and a closing gala.
+                </p>
+            </motion.div>
+        ),
+        []
+    );
+
     return (
         <section id="program" className="py-24 px-4 bg-white">
             <motion.div
@@ -36,60 +177,74 @@ export default function ProgramHighlightsSection({ highlights }: { highlights: H
                 viewport={{ once: true, amount: 0.25 }}
                 variants={sectionContainer}
             >
-                <motion.div variants={sectionItem}>
-                    <div className="flex items-center gap-3">
-                        <span className="inline-block h-1 w-12 rounded-full" style={{ backgroundColor: '#E67E22' }} />
-                        <span className="uppercase tracking-[0.2em] text-xs" style={{ color: '#2E5339' }}>
-                            Agenda at a glance
-                        </span>
-                    </div>
-                    <h3 className="mt-6 text-3xl md:text-5xl font-serif text-gray-900">Program Highlights</h3>
-                    <p className="mt-3 text-gray-600 max-w-2xl">
-                        Five days hosted at the renovated Exhibition Centre in Dakar — film premieres, forums, ateliers, and a closing gala.
-                    </p>
-                </motion.div>
+                {header}
 
-                <div className="mt-10 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6">
-                    {highlights.map((item, idx) => (
-                        <motion.a
-                            key={idx}
-                            href="#agenda"
-                            variants={sectionItem}
-                            whileHover={{ y: -2 }}
-                            className="group relative overflow-hidden rounded-xl border border-gray-200 bg-white/80 backdrop-blur-sm p-5"
-                        >
-                            <motion.span
-                                initial={{ width: '0%' }}
-                                whileHover={{ width: '100%' }}
-                                transition={{ duration: 0.35, ease: 'easeInOut' }}
-                                className="absolute left-0 top-0 h-full"
-                                style={{
-                                    background:
-                                        'linear-gradient(90deg, rgba(46,83,57,0.08) 0%, rgba(46,83,57,0.03) 100%)',
-                                    zIndex: 0,
-                                }}
-                            />
-
-                            <span
-                                className="absolute left-0 top-0 w-full h-[3px]"
-                                style={{ backgroundColor: idx === 0 ? '#E67E22' : '#2E5339', opacity: idx === 0 ? 1 : 0.8 }}
-                            />
-
-                            <div className="relative z-10">
-                                <div className="flex items-center gap-2 text-sm text-gray-700">
-                                    <Calendar className="w-4 h-4" style={{ color: '#2E5339' }} />
-                                    <span>{item.date}</span>
-                                </div>
-                                <h4 className="mt-3 text-lg font-semibold text-gray-900">{item.title}</h4>
-                                <p className="mt-2 text-sm text-gray-600">{item.blurb}</p>
-
-                                <div className="mt-4 inline-flex items-center gap-2 text-sm" style={{ color: '#2E5339' }}>
-                                    <span className="tracking-widest">EXPLORE</span>
-                                    <ArrowUpRight className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
-                                </div>
-                            </div>
-                        </motion.a>
-                    ))}
+                <div ref={containerRef} className="relative mt-12 mx-auto max-w-3xl pl-8">
+                    <span className="pointer-events-none absolute left-4 top-0 bottom-0 w-px bg-gradient-to-b from-[#2E5339]/20 via-[#2E5339]/30 to-[#2E5339]/20" />
+                    <motion.span
+                        className="pointer-events-none absolute left-4 h-6 w-6 -translate-x-1/2 rounded-full ring-2 ring-[#2E5339] shadow-[0_0_0_6px_rgba(46,83,57,0.12)] bg-transparent"
+                        animate={indicatorControls}
+                        initial={{ y: 0 }}
+                    />
+                    <ul className="space-y-2">
+                        {highlights.map((item, idx) => {
+                            const active = currentIndex === idx;
+                            return (
+                                <motion.li
+                                    key={idx}
+                                    ref={setItemRefAt(idx)}
+                                    data-index={idx}
+                                    variants={sectionItem}
+                                    className="rounded-xl"
+                                >
+                                    <a
+                                        href="#agenda"
+                                        onMouseEnter={() => void moveIndicator(idx, 'manual')}
+                                        onFocus={() => void moveIndicator(idx, 'manual')}
+                                        className="group relative grid grid-cols-[2rem_1fr] items-start gap-4 rounded-xl px-3 py-5"
+                                    >
+                                        <div className="relative z-10 flex items-start">
+                                            <div ref={setDotRefAt(idx)} className="relative h-8 w-8 grid place-items-center">
+                                                {idx === 0 && (
+                                                    <motion.span
+                                                        aria-hidden
+                                                        className="absolute h-5 w-5 rounded-full"
+                                                        animate={{
+                                                            boxShadow: [
+                                                                '0 0 0 0 rgba(230,126,34,0.45)',
+                                                                '0 0 0 10px rgba(230,126,34,0)',
+                                                            ],
+                                                        }}
+                                                        transition={{ duration: 1.6, ease: easeInOut, repeat: Infinity }}
+                                                    />
+                                                )}
+                                                <span
+                                                    className="h-2.5 w-2.5 rounded-full"
+                                                    style={{ backgroundColor: idx === 0 ? '#E67E22' : '#2E5339', opacity: idx === 0 ? 1 : 0.9 }}
+                                                />
+                                            </div>
+                                        </div>
+                                        <div className="relative z-10">
+                                            <div className="flex items-center gap-2 text-sm text-gray-700">
+                                                <Calendar className="w-4 h-4" style={{ color: '#2E5339' }} />
+                                                <span>{item.date}</span>
+                                            </div>
+                                            <div className="mt-1">
+                                                <h4 className="text-lg font-semibold transition-colors" style={{ color: active ? '#2E5339' : '#111827' }}>
+                                                    {item.title}
+                                                </h4>
+                                                <p className="mt-1.5 text-sm text-gray-600 max-w-prose">{item.blurb}</p>
+                                                <div className="mt-3 inline-flex items-center gap-2 text-sm" style={{ color: '#2E5339' }}>
+                                                    <span className="tracking-widest">EXPLORE</span>
+                                                    <ArrowUpRight className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </motion.li>
+                            );
+                        })}
+                    </ul>
                 </div>
 
                 <motion.div variants={sectionItem} className="mt-12 text-center">
