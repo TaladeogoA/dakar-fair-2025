@@ -7,6 +7,7 @@ import MuseeLogo from '@/assets/partner-musee.png';
 import UcadLogo from '@/assets/partner-ucad.png';
 import ZeitzLogo from '@/assets/partner-zeitz.jpg';
 import Preloader from '@/components/Preloader';
+import AboutDakarSection from '@/components/sections/AboutDakarSection';
 import CuratedPavilionCarousel from '@/components/sections/CuratedPavilionCarousel';
 import WhenWhereSection from '@/components/sections/WhenWhereSection';
 import AnimatedButton from '@/components/ui/AnimatedButton';
@@ -170,64 +171,7 @@ const Home = () => {
             </header>
           </section>
 
-          {/* About Dakar 2025 */}
-          <section className="py-24 px-4 bg-[#2E5339] text-white">
-            <div className="max-w-7xl mx-auto">
-              {/* Lede + body */}
-              <div className="grid md:grid-cols-12 gap-10 md:gap-12 items-start">
-                {/* Lede (big statement) */}
-                <motion.h2
-                  initial={{ opacity: 0, y: 12 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.6, ease: "easeInOut" }}
-                  viewport={{ once: true, amount: 0.3 }}
-                  className="md:col-span-7 text-4xl md:text-6xl leading-tight font-sans text-white"
-                >
-                  A reimagined International Fair returns to Dakar in 2025. A landmark meeting point for film, design, music, and technology shaping the Pan-African future.
-                </motion.h2>
-
-                {/* Supporting copy + CTA */}
-                <motion.div
-                  initial={{ opacity: 0, y: 12 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.6, delay: 0.1, ease: "easeInOut" }}
-                  viewport={{ once: true, amount: 0.3 }}
-                  className="md:col-span-5 md:pl-6"
-                >
-                  <p className="text-base md:text-lg text-white leading-relaxed">
-                    Hosted on the renovated grounds of the original Exhibition Centre, the 2025 Fair advances five core goals: Intellectual leadership in Pan-African cultural discourse, economic diversification through creative industries, the
-                    preservation and innovation of artisanal heritage, Digital Africa leadership, and education through cultural repatriation.
-                  </p>
-
-                  <a href="#program" className="group inline-flex items-center gap-2 mt-6 text-white hover:text-gray-100 transition-colors">
-                    <span className="text-sm tracking-widest">ABOUT THE FAIR</span>
-                    <ArrowUpRight className="w-4 h-4 transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
-                  </a>
-                </motion.div>
-              </div>
-
-              {/* Partner/Institution logos row (placeholders with subtle interactions) */}
-              <motion.div
-                initial={{ opacity: 0 }}
-                whileInView={{ opacity: 1 }}
-                transition={{ duration: 0.6, delay: 0.15 }}
-                viewport={{ once: true, amount: 0.2 }}
-                className="mt-16 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-8 place-items-center"
-              >
-                {partnerLogos.map((logo, i) => (
-                  <div key={i} className="opacity-70 hover:opacity-100 transition-opacity duration-300">
-                    <Image
-                      src={logo.src}
-                      alt={logo.alt}
-                      width={160}
-                      height={60}
-                      className="grayscale hover:grayscale-0 object-contain"
-                    />
-                  </div>
-                ))}
-              </motion.div>
-            </div>
-          </section>
+          <AboutDakarSection partnerLogos={partnerLogos} />
 
           {/* Program Highlights (Agenda at a glance) */}
           <section id="program" className="py-24 px-4 bg-white">
