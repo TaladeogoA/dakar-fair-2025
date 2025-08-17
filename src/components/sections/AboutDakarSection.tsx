@@ -1,8 +1,9 @@
 'use client';
 
-import { motion, Variants } from 'framer-motion';
+import { easeInOut, motion, Variants } from 'framer-motion';
 import { ArrowUpRight } from 'lucide-react';
 import Image, { StaticImageData } from 'next/image';
+import { useState } from 'react';
 
 type PartnerLogo = { src: StaticImageData | string; alt: string };
 
@@ -20,28 +21,51 @@ const item: Variants = {
     visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: 'easeInOut' } },
 };
 
-function HoverHighlightText({
+function LedeHoverFlow({
     text,
     className,
 }: {
     text: string;
     className?: string;
 }) {
+    const [active, setActive] = useState<number | null>(null);
     const tokens = text.split(/(\s+)/);
+    const highlightTransition = { duration: 0.5, ease: easeInOut };
+
     return (
-        <span className={className}>
-            {tokens.map((t, i) =>
-                t.trim().length === 0 ? (
-                    <span key={i}>{t}</span>
-                ) : (
+        <span
+            className={className}
+            onMouseLeave={() => setActive(null)}
+            style={{ lineHeight: '1.15' }}
+        >
+            {tokens.map((t, i) => {
+                const isSpace = t.trim().length === 0;
+                if (isSpace) return <span key={i}>{t}</span>;
+                const isActive = active === i;
+                return (
                     <span
                         key={i}
-                        className="transition-colors duration-300 hover:text-[#E67E22]"
+                        className="relative inline-block px-0.5"
+                        onMouseEnter={() => setActive(i)}
                     >
-                        {t}
+                        {isActive && (
+                            <motion.span
+                                layoutId="ledeHighlight"
+                                className="absolute inset-x-[-3px] inset-y-[-2px] rounded-md"
+                                style={{ backgroundColor: 'rgba(230,126,34,0.18)' }}
+                                transition={highlightTransition}
+                            />
+                        )}
+                        <motion.span
+                            className="relative z-10"
+                            animate={{ color: isActive ? '#E67E22' : '#ffffff' }}
+                            transition={highlightTransition}
+                        >
+                            {t}
+                        </motion.span>
                     </span>
-                ),
-            )}
+                );
+            })}
         </span>
     );
 }
@@ -61,7 +85,7 @@ export default function AboutDakarSection({ partnerLogos }: Props) {
                         variants={item}
                         className="md:col-span-7 text-4xl md:text-6xl leading-tight font-sans text-white"
                     >
-                        <HoverHighlightText text="A reimagined International Fair returns to Dakar in 2025. A landmark meeting point for film, design, music, and technology shaping the Pan-African future." />
+                        <LedeHoverFlow text="A reimagined International Fair returns to Dakar in 2025. A landmark meeting point for film, design, music, and technology shaping the Pan-African future." />
                     </motion.h2>
 
                     <motion.div variants={item} className="md:col-span-5 md:pl-6">
@@ -71,7 +95,7 @@ export default function AboutDakarSection({ partnerLogos }: Props) {
 
                         <a
                             href="#program"
-                            className="group inline-flex items-center gap-2 mt-6 text-white hover:text-gray-100 transition-colors"
+                            className="group inline-flex items-center gap-2 mt-6 text-white hover:text-gray-200 transition-colors"
                         >
                             <span className="text-sm tracking-widest">ABOUT THE FAIR</span>
                             <ArrowUpRight className="w-4 h-4 transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
@@ -84,13 +108,13 @@ export default function AboutDakarSection({ partnerLogos }: Props) {
                     className="mt-16 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-8 place-items-center"
                 >
                     {partnerLogos.map((logo, i) => (
-                        <div key={i} className="opacity-70 hover:opacity-100 transition-opacity duration-300">
+                        <div key={i} className="opacity-70 sm:hover:opacity-100 transition-opacity duration-300">
                             <Image
                                 src={logo.src}
                                 alt={logo.alt}
                                 width={160}
                                 height={60}
-                                className="grayscale hover:grayscale-0 object-contain"
+                                className="object-contain grayscale-0 sm:grayscale sm:hover:grayscale-0"
                             />
                         </div>
                     ))}
