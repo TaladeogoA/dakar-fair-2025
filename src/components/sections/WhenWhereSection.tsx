@@ -2,6 +2,7 @@
 
 import AnimatedButton from '@/components/ui/AnimatedButton';
 import { motion, Transition, useReducedMotion, Variants } from 'framer-motion';
+import type { LucideIcon } from 'lucide-react';
 import {
     Accessibility,
     Bus,
@@ -245,22 +246,25 @@ export default function WhenWhereSection() {
                         ACCESSIBILITY & ON‑SITE SERVICES
                     </div>
                     <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-3">
-                        {badges.map((b, i) => (
-                            <motion.div
-                                key={b.label}
-                                whileHover={reduceMotion ? undefined : { y: -2 }}
-                                transition={hoverLift}
-                                className="group flex items-center gap-2 rounded-lg border border-gray-200 bg-white/90 px-3 py-2 text-xs text-gray-800"
-                            >
-                                <span
-                                    className="inline-flex h-6 w-6 items-center justify-center rounded-md"
-                                    style={{ backgroundColor: i % 3 === 0 ? '#2E5339' : 'rgba(230,126,34,0.12)' }}
+                        {badges.map((b, i) => {
+                            const Icon = b.icon;
+                            return (
+                                <motion.div
+                                    key={b.label}
+                                    whileHover={reduceMotion ? undefined : { y: -2 }}
+                                    transition={hoverLift}
+                                    className="group flex items-center gap-2 rounded-lg border border-gray-200 bg-white/90 px-3 py-2 text-xs text-gray-800"
                                 >
-                                    <b.icon className="h-3.5 w-3.5" style={{ color: i % 3 === 0 ? '#fff' : '#E67E22' }} />
-                                </span>
-                                <span className="tracking-wide">{b.label}</span>
-                            </motion.div>
-                        ))}
+                                    <span
+                                        className="inline-flex h-6 w-6 items-center justify-center rounded-md"
+                                        style={{ backgroundColor: i % 3 === 0 ? '#2E5339' : 'rgba(230,126,34,0.12)' }}
+                                    >
+                                        <Icon className="h-3.5 w-3.5" style={{ color: i % 3 === 0 ? '#fff' : '#E67E22' }} />
+                                    </span>
+                                    <span className="tracking-wide">{b.label}</span>
+                                </motion.div>
+                            );
+                        })}
                     </div>
                 </motion.div>
             </motion.div>
@@ -288,7 +292,7 @@ export default function WhenWhereSection() {
     );
 }
 
-const badges: { icon: React.ComponentType; label: string }[] = [
+const badges: { icon: LucideIcon; label: string }[] = [
     { icon: Accessibility, label: 'Step‑free routes' },
     { icon: Ear, label: 'Hearing assistance' },
     { icon: Moon, label: 'Quiet room' },

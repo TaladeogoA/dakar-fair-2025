@@ -7,7 +7,7 @@ import MuseeLogo from '@/assets/partner-musee.png';
 import UcadLogo from '@/assets/partner-ucad.png';
 import ZeitzLogo from '@/assets/partner-zeitz.jpg';
 import Preloader from '@/components/Preloader';
-import CuratedPavilionSection from '@/components/sections/CuratedPavilionSection';
+import CuratedPavilionCarousel from '@/components/sections/CuratedPavilionCarousel';
 import WhenWhereSection from '@/components/sections/WhenWhereSection';
 import AnimatedButton from '@/components/ui/AnimatedButton';
 import { motion, Variants } from 'framer-motion';
@@ -15,10 +15,7 @@ import {
   ArrowUpRight,
   Calendar,
   X as CloseIcon,
-  Mail,
-  MapPin,
-  Menu as MenuIcon,
-  Phone
+  Menu as MenuIcon
 } from 'lucide-react';
 import Image from 'next/image';
 import { useRef, useState } from 'react';
@@ -306,20 +303,20 @@ const Home = () => {
             </motion.div>
           </section>
 
-          <CuratedPavilionSection />
+          <CuratedPavilionCarousel />
           <WhenWhereSection />
 
           {/* Final CTA */}
-          <section className="py-20 px-4" style={{ backgroundColor: '#F5E6D3' }}>
+          {/* <section className="py-20 px-4" style={{ backgroundColor: '#F5E6D3' }}>
             <div className="max-w-4xl mx-auto text-center">
               <h2 className="text-5xl font-serif mb-8">Be part of Africa&apos;s cultural renaissance.</h2>
               <p className="text-xl text-gray-700 mb-12">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Join us for five transformative days in Dakar.</p>
               <button className="bg-orange-500 hover:bg-orange-600 text-white px-12 py-6 rounded-lg text-xl font-medium transition-colors">Register Now</button>
             </div>
-          </section>
+          </section> */}
 
           {/* Footer */}
-          <footer className="bg-gray-900 text-white py-16 px-4">
+          {/* <footer className="bg-gray-900 text-white py-16 px-4">
             <div className="max-w-7xl mx-auto">
               <div className="grid md:grid-cols-4 gap-8">
                 <div>
@@ -424,7 +421,7 @@ const Home = () => {
                 <p className="text-sm">&copy; 2025 Dakar Arts Festival. All rights reserved.</p>
               </div>
             </div>
-          </footer>
+          </footer> */}
         </div>
       )}
     </>
