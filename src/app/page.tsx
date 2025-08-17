@@ -199,7 +199,7 @@ const Home = () => {
                     preservation and innovation of artisanal heritage, Digital Africa leadership, and education through cultural repatriation.
                   </p>
 
-                  <a href="#program" className="group inline-flex items-center gap-2 mt-6 text-[#2E5339] hover:text-[#1f3a29] transition-colors">
+                  <a href="#program" className="group inline-flex items-center gap-2 mt-6 text-white hover:text-gray-100 transition-colors">
                     <span className="text-sm tracking-widest">ABOUT THE FAIR</span>
                     <ArrowUpRight className="w-4 h-4 transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
                   </a>
