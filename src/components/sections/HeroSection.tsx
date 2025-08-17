@@ -2,8 +2,9 @@
 
 import Logo from '@/assets/logo.png';
 import AnimatedButton from '@/components/ui/AnimatedButton';
+import { useI18n } from '@/i18n/I18nProvider';
 import { motion, Variants } from 'framer-motion';
-import { X as CloseIcon, Menu as MenuIcon } from 'lucide-react';
+import { ChevronDown, X as CloseIcon, Menu as MenuIcon } from 'lucide-react';
 import Image from 'next/image';
 import { useRef, useState } from 'react';
 
@@ -25,7 +26,11 @@ const heroItem: Variants = {
 
 export default function HeroSection() {
     const [menuOpen, setMenuOpen] = useState(false);
+    const [langOpen, setLangOpen] = useState(false);
     const videoRef = useRef<HTMLVideoElement>(null);
+    const { t, locale, setLocale } = useI18n();
+
+    const textColor = menuOpen ? '#2C2C2C' : '#FFFFFF';
 
     return (
         <section className="relative h-screen overflow-hidden">
@@ -45,16 +50,16 @@ export default function HeroSection() {
                 <motion.div className="relative z-10 h-full" initial="hidden" animate="visible" variants={heroContainer}>
                     <div className="absolute bottom-0 left-0 w-full px-4 md:px-10 pb-10 md:pb-14 max-w-5xl">
                         <motion.h1 variants={heroItem} className="text-left text-white font-serif leading-[1.05] text-5xl md:text-7xl">
-                            Dakar 2025: The Pan-African Arts Renaissance
+                            {t('hero.title')}
                         </motion.h1>
 
                         <motion.p variants={heroItem} className="mt-4 md:mt-6 text-left text-white/90 text-lg md:text-xl max-w-2xl">
-                            Five days of art, dialogue, and innovation — reimagining Dakar&apos;s legacy as the cultural capital of Africa.
+                            {t('hero.subtitle')}
                         </motion.p>
 
                         <motion.div variants={heroItem} className="mt-6 md:mt-8 flex items-center gap-4">
-                            <AnimatedButton variant="primary">Register Now</AnimatedButton>
-                            <AnimatedButton variant="secondary">Explore Program</AnimatedButton>
+                            <AnimatedButton variant="primary">{t('hero.register')}</AnimatedButton>
+                            <AnimatedButton variant="secondary">{t('hero.explore')}</AnimatedButton>
                         </motion.div>
                     </div>
                 </motion.div>
@@ -63,10 +68,10 @@ export default function HeroSection() {
             <div className={`absolute inset-0 z-10 bg-[#F4F1EB] transition-transform duration-500 ease-in-out ${menuOpen ? 'translate-y-0' : '-translate-y-full'}`}>
                 <nav className="h-full w-full flex items-center justify-center">
                     <ul className="text-[#2C2C2C] text-3xl md:text-5xl font-serif space-y-6 text-center">
-                        <li>Exhibitions</li>
-                        <li>Learning and research</li>
-                        <li>Another one</li>
-                        <li>Etc</li>
+                        <li>{t('nav.items.exhibitions')}</li>
+                        <li>{t('nav.items.learning')}</li>
+                        <li>{t('nav.items.another')}</li>
+                        <li>{t('nav.items.etc')}</li>
                     </ul>
                 </nav>
             </div>
@@ -84,11 +89,58 @@ export default function HeroSection() {
                         onClick={() => setMenuOpen((v) => !v)}
                         className="absolute left-1/2 top-6 -translate-x-1/2 flex items-center gap-2 focus:outline-none cursor-pointer"
                     >
-                        <span className={`transition-colors ${menuOpen ? 'text-[#2C2C2C]' : 'text-white'}`}>
+                        <span className="transition-colors" style={{ color: textColor }}>
                             {menuOpen ? <CloseIcon className="w-6 h-6 transition-transform duration-300 rotate-90" /> : <MenuIcon className="w-6 h-6 transition-transform duration-300 rotate-0" />}
                         </span>
-                        <span className={`text-sm tracking-[0.35em] transition-colors ${menuOpen ? 'text-[#2C2C2C]' : 'text-white'}`}>MENU</span>
+                        <span className="text-sm tracking-[0.35em]" style={{ color: textColor }}>{t('nav.menu')}</span>
                     </button>
+
+                    <div className="absolute right-4 top-6">
+                        <div className="relative">
+                            <button
+                                type="button"
+                                onClick={() => setLangOpen((o) => !o)}
+                                className="inline-flex items-center gap-1 px-2 py-1 text-sm tracking-[0.35em]"
+                                style={{ color: textColor }}
+                                aria-haspopup="listbox"
+                                aria-expanded={langOpen}
+                            >
+                                <span>{locale === 'fr' ? 'FR' : 'EN'}</span>
+                                <ChevronDown className="w-4 h-4" />
+                            </button>
+                            {langOpen && (
+                                <ul
+                                    role="listbox"
+                                    className="absolute right-0 mt-2 min-w-[4.5rem] rounded-sm border border-black/10 bg-white/90 backdrop-blur text-[#2C2C2C] text-xs tracking-[0.35em]"
+                                >
+                                    <li>
+                                        <button
+                                            type="button"
+                                            onClick={() => {
+                                                setLocale('fr');
+                                                setLangOpen(false);
+                                            }}
+                                            className={`block w-full px-3 py-2 text-left ${locale === 'fr' ? 'font-semibold' : ''}`}
+                                        >
+                                            FR
+                                        </button>
+                                    </li>
+                                    <li>
+                                        <button
+                                            type="button"
+                                            onClick={() => {
+                                                setLocale('en');
+                                                setLangOpen(false);
+                                            }}
+                                            className={`block w-full px-3 py-2 text-left ${locale === 'en' ? 'font-semibold' : ''}`}
+                                        >
+                                            EN
+                                        </button>
+                                    </li>
+                                </ul>
+                            )}
+                        </div>
+                    </div>
                 </div>
             </header>
         </section>

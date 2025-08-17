@@ -1,7 +1,8 @@
 'use client';
 
 import AnimatedButton from '@/components/ui/AnimatedButton';
-import { motion, useReducedMotion } from 'framer-motion';
+import { useI18n } from '@/i18n/I18nProvider';
+import { easeInOut, motion, useReducedMotion } from 'framer-motion';
 import Image from 'next/image';
 import { useEffect, useState } from 'react';
 
@@ -17,23 +18,19 @@ const HOLD_MS = 3000;
 const FADE_S = 0.8;
 
 export default function CuratedPavilionCarousel() {
+    const { t } = useI18n();
     const reduceMotion = useReducedMotion();
     const [idx, setIdx] = useState(0);
 
     useEffect(() => {
         if (reduceMotion) return;
-        const t = setTimeout(() => setIdx((p) => (p + 1) % images.length), HOLD_MS);
-        return () => clearTimeout(t);
+        const tmt = setTimeout(() => setIdx((p) => (p + 1) % images.length), HOLD_MS);
+        return () => clearTimeout(tmt);
     }, [idx, reduceMotion]);
 
     return (
-        <section
-            id="curated-pavilion"
-            className="relative w-full"
-            aria-label="Curated Pavilion — slideshow"
-        >
+        <section id="curated-pavilion" className="relative w-full" aria-label="Curated Pavilion — slideshow">
             <div className="relative w-full h-[70vh] md:h-[78vh] overflow-hidden">
-                {/* Stacked slides for true crossfade */}
                 {images.map((img, i) => {
                     const isActive = i === idx;
                     return (
@@ -42,17 +39,10 @@ export default function CuratedPavilionCarousel() {
                             className="absolute inset-0 z-0 will-change-[opacity]"
                             initial={{ opacity: i === 0 ? 1 : 0 }}
                             animate={{ opacity: isActive ? 1 : 0 }}
-                            transition={{ duration: FADE_S, ease: 'easeInOut' }}
+                            transition={{ duration: FADE_S, ease: easeInOut }}
                             aria-hidden={!isActive}
                         >
-                            <Image
-                                src={img.src}
-                                alt={img.alt}
-                                fill
-                                priority={i === 0}
-                                sizes="100vw"
-                                className="object-cover"
-                            />
+                            <Image src={img.src} alt={img.alt} fill priority={i === 0} sizes="100vw" className="object-cover" />
                         </motion.div>
                     );
                 })}
@@ -65,25 +55,23 @@ export default function CuratedPavilionCarousel() {
                             <div className="flex items-center gap-3">
                                 <span className="inline-block h-1 w-10 rounded-full" style={{ backgroundColor: '#E67E22' }} />
                                 <span className="uppercase tracking-[0.2em] text-xs text-white/85">
-                                    Special Exhibition
+                                    {t('curated.kicker')}
                                 </span>
                             </div>
                             <h2 className="mt-3 text-3xl md:text-5xl font-serif tracking-tight text-white leading-[1.05]">
-                                Curated Pavilion 2025
+                                {t('curated.title')}
                             </h2>
                             <p className="mt-2 text-white/85 italic max-w-prose">
-                                A living archive: large‑scale artworks, pavilion renderings, and archival/modern juxtapositions.
+                                {t('curated.desc')}
                             </p>
                             <div className="mt-5">
                                 <AnimatedButton variant="primary" className="px-6">
-                                    Explore Pavilion
+                                    {t('curated.cta')}
                                 </AnimatedButton>
                             </div>
                         </div>
                     </div>
                 </div>
-
-                {/* No dots, no hover pause */}
             </div>
         </section>
     );

@@ -1,5 +1,6 @@
 'use client';
 
+import { useI18n } from '@/i18n/I18nProvider';
 import { easeInOut, motion, Variants } from 'framer-motion';
 import { ArrowUpRight } from 'lucide-react';
 import Image, { StaticImageData } from 'next/image';
@@ -71,6 +72,8 @@ function LedeHoverFlow({
 }
 
 export default function AboutDakarSection({ partnerLogos }: Props) {
+    const { t } = useI18n();
+
     return (
         <section className="py-24 px-4 bg-[#2E5339] text-white">
             <motion.div
@@ -85,19 +88,19 @@ export default function AboutDakarSection({ partnerLogos }: Props) {
                         variants={item}
                         className="md:col-span-7 text-4xl md:text-6xl leading-tight font-sans text-white"
                     >
-                        <LedeHoverFlow text="A reimagined International Fair returns to Dakar in 2025. A landmark meeting point for film, design, music, and technology shaping the Pan-African future." />
+                        <LedeHoverFlow text={t('about.lede')} />
                     </motion.h2>
 
                     <motion.div variants={item} className="md:col-span-5 md:pl-6">
                         <p className="text-base md:text-lg text-white leading-relaxed">
-                            Hosted on the renovated grounds of the original Exhibition Centre, the 2025 Fair advances five core goals: Intellectual leadership in Pan-African cultural discourse, economic diversification through creative industries, the preservation and innovation of artisanal heritage, Digital Africa leadership, and education through cultural repatriation.
+                            {t('about.supporting')}
                         </p>
 
                         <a
                             href="#program"
                             className="group inline-flex items-center gap-2 mt-6 text-white hover:text-gray-200 transition-colors"
                         >
-                            <span className="text-sm tracking-widest">ABOUT THE FAIR</span>
+                            <span className="text-sm tracking-widest">{t('about.cta')}</span>
                             <ArrowUpRight className="w-4 h-4 transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
                         </a>
                     </motion.div>

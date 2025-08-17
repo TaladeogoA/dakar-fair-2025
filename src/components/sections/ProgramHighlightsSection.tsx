@@ -1,6 +1,7 @@
 'use client';
 
 import AnimatedButton from '@/components/ui/AnimatedButton';
+import { useI18n } from '@/i18n/I18nProvider';
 import { easeInOut, motion, Variants } from 'framer-motion';
 import { ArrowUpRight, Calendar } from 'lucide-react';
 import { RefCallback, useEffect, useMemo, useRef, useState } from 'react';
@@ -28,8 +29,8 @@ const sectionItem: Variants = {
 };
 
 export default function ProgramHighlightsSection({ highlights }: { highlights: Highlight[] }) {
+    const { t } = useI18n();
     const [currentIndex, setCurrentIndex] = useState(0);
-    const containerRef = useRef<HTMLDivElement | null>(null);
     const itemRefs = useRef<Array<HTMLLIElement | null>>([]);
     const manualUntilRef = useRef<number | null>(null);
     const manualTimerRef = useRef<number | null>(null);
@@ -78,16 +79,16 @@ export default function ProgramHighlightsSection({ highlights }: { highlights: H
                 <div className="flex items-center justify-center gap-3">
                     <span className="inline-block h-1 w-12 rounded-full" style={{ backgroundColor: '#E67E22' }} />
                     <span className="uppercase tracking-[0.2em] text-xs" style={{ color: '#2E5339' }}>
-                        Agenda at a glance
+                        {t('program.kicker')}
                     </span>
                 </div>
-                <h3 className="mt-6 text-3xl md:text-5xl font-serif text-gray-900">Program Highlights</h3>
+                <h3 className="mt-6 text-3xl md:text-5xl font-serif text-gray-900">{t('program.title')}</h3>
                 <p className="mt-3 text-gray-600 max-w-2xl mx-auto">
-                    Five days hosted at the renovated Exhibition Centre in Dakar — film premieres, forums, ateliers, and a closing gala.
+                    {t('program.desc')}
                 </p>
             </motion.div>
         ),
-        []
+        [t]
     );
 
     return (
@@ -101,7 +102,7 @@ export default function ProgramHighlightsSection({ highlights }: { highlights: H
             >
                 {header}
 
-                <div ref={containerRef} className="relative mt-12 mx-auto max-w-3xl pl-8">
+                <div className="relative mt-12 mx-auto max-w-3xl pl-8">
                     <span className="pointer-events-none absolute left-4 top-0 bottom-0 w-px bg-gradient-to-b from-[#2E5339]/20 via-[#2E5339]/30 to-[#2E5339]/20" />
                     <ul className="space-y-2">
                         {highlights.map((item, idx) => {
@@ -140,11 +141,7 @@ export default function ProgramHighlightsSection({ highlights }: { highlights: H
                                                     style={{ backgroundColor: idx === 0 ? '#E67E22' : '#2E5339', opacity: idx === 0 ? 1 : 0.9 }}
                                                 />
                                                 {active && (
-                                                    <motion.span
-                                                        layoutId="dotIndicator"
-                                                        className="absolute inset-0 grid place-items-center"
-                                                        transition={{ type: 'spring', stiffness: 500, damping: 40, mass: 0.5 }}
-                                                    >
+                                                    <motion.span layoutId="dotIndicator" className="absolute inset-0 grid place-items-center" transition={{ type: 'spring', stiffness: 500, damping: 40, mass: 0.5 }}>
                                                         <span className="h-6 w-6 rounded-full ring-2 ring-[#2E5339] shadow-[0_0_0_6px_rgba(46,83,57,0.12)]" />
                                                     </motion.span>
                                                 )}
@@ -161,7 +158,7 @@ export default function ProgramHighlightsSection({ highlights }: { highlights: H
                                                 </h4>
                                                 <p className="mt-1.5 text-sm text-gray-600 max-w-prose">{item.blurb}</p>
                                                 <div className="mt-3 inline-flex items-center gap-2 text-sm" style={{ color: '#2E5339' }}>
-                                                    <span className="tracking-widest">EXPLORE</span>
+                                                    <span className="tracking-widest">{t('program.explore')}</span>
                                                     <ArrowUpRight className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
                                                 </div>
                                             </div>
@@ -175,7 +172,7 @@ export default function ProgramHighlightsSection({ highlights }: { highlights: H
 
                 <motion.div variants={sectionItem} className="mt-12 text-center">
                     <AnimatedButton variant="primary" className="px-8">
-                        View full agenda
+                        {t('program.cta')}
                     </AnimatedButton>
                 </motion.div>
             </motion.div>

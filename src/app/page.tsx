@@ -11,32 +11,24 @@ import CuratedPavilionCarousel from '@/components/sections/CuratedPavilionCarous
 import HeroSection from '@/components/sections/HeroSection';
 import ProgramHighlightsSection from '@/components/sections/ProgramHighlightsSection';
 import WhenWhereSection from '@/components/sections/WhenWhereSection';
-import { useState } from 'react';
+import { useI18n } from '@/i18n/I18nProvider';
+import { translations } from '@/i18n/translations';
+import { useMemo, useState } from 'react';
 
 const Home = () => {
   const [loading, setLoading] = useState(true);
+  const { locale } = useI18n();
 
   const partnerLogos = [
-    { src: MuseeLogo, alt: "Musée des Civilisations Noires" },
-    { src: ZeitzLogo, alt: "Zeitz MOCAA" },
-    { src: GoogleArtsLogo, alt: "Google Arts & Culture" },
-    { src: AwhfLogo, alt: "African World Heritage Fund" },
-    { src: UcadLogo, alt: "Cheikh Anta Diop University" },
-    { src: AuLogo, alt: "African Union" },
+    { src: MuseeLogo, alt: 'Musée des Civilisations Noires' },
+    { src: ZeitzLogo, alt: 'Zeitz MOCAA' },
+    { src: GoogleArtsLogo, alt: 'Google Arts & Culture' },
+    { src: AwhfLogo, alt: 'African World Heritage Fund' },
+    { src: UcadLogo, alt: 'Cheikh Anta Diop University' },
+    { src: AuLogo, alt: 'African Union' },
   ];
 
-  const highlights = [
-    {
-      date: 'Thu • May 15, 2025',
-      title: 'Opening Night Premiere',
-      blurb: 'Red-carpet screening and welcome concert at the Exhibition Centre Grand Hall.',
-    },
-    {
-      date: 'Fri • May 16, 2025',
-      title: 'Creative Industries Forum',
-      blurb: 'Financing, distribution, and cross-continental co-production talks.',
-    },
-  ];
+  const highlights = useMemo(() => translations[locale].highlights, [locale]);
 
   return (
     <>
