@@ -72,7 +72,7 @@ export default function WhatsHappeningSection({ items }: Props) {
             >
                 <div className="flex items-end justify-between gap-6 mb-4">
                     <motion.div variants={headItem} className="flex-1">
-                        <h2 className="text-4xl md:text-6xl font-serif tracking-tight text-[#111]">
+                        <h2 className="text-3xl md:text-5xl font-serif tracking-tight text-[#111]">
                             {t('whats.title')}
                         </h2>
                         <p className="mt-2 text-gray-600 max-w-2xl">{t('whats.intro')}</p>
