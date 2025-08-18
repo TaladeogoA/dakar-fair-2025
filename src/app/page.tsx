@@ -9,6 +9,7 @@ import Preloader from '@/components/Preloader';
 import AboutDakarSection from '@/components/sections/AboutDakarSection';
 import CuratedPavilionCarousel from '@/components/sections/CuratedPavilionCarousel';
 import HeroSection from '@/components/sections/HeroSection';
+import ParallaxFooter from '@/components/sections/ParallaxFooter';
 import ProgramHighlightsSection from '@/components/sections/ProgramHighlightsSection';
 import RegisterUpdatesSection from '@/components/sections/RegisterUpdatesSection';
 import WhatsHappeningSection from '@/components/sections/WhatsHappeningSection';
@@ -37,122 +38,17 @@ const Home = () => {
     <>
       {loading && <Preloader onComplete={() => setLoading(false)} />}
       {!loading && (
-        <div className="min-h-screen bg-white">
-          <HeroSection />
-          <AboutDakarSection partnerLogos={partnerLogos} />
-          <ProgramHighlightsSection highlights={highlights} />
-          <WhatsHappeningSection items={whatsItems} />
-          <CuratedPavilionCarousel />
-          <WhenWhereSection />
-          <RegisterUpdatesSection />
-
-          {/* Footer */}
-          {/* <footer className="bg-gray-900 text-white py-16 px-4">
-            <div className="max-w-7xl mx-auto">
-              <div className="grid md:grid-cols-4 gap-8">
-                <div>
-                  <h3 className="text-xl font-semibold mb-4">About</h3>
-                  <ul className="space-y-2 text-gray-400">
-                    <li>
-                      <a href="#" className="hover:text-white transition-colors">
-                        Our Story
-                      </a>
-                    </li>
-                    <li>
-                      <a href="#" className="hover:text-white transition-colors">
-                        Mission
-                      </a>
-                    </li>
-                    <li>
-                      <a href="#" className="hover:text-white transition-colors">
-                        Team
-                      </a>
-                    </li>
-                    <li>
-                      <a href="#" className="hover:text-white transition-colors">
-                        Press
-                      </a>
-                    </li>
-                  </ul>
-                </div>
-
-                <div>
-                  <h3 className="text-xl font-semibold mb-4">Program</h3>
-                  <ul className="space-y-2 text-gray-400">
-                    <li>
-                      <a href="#" className="hover:text-white transition-colors">
-                        Schedule
-                      </a>
-                    </li>
-                    <li>
-                      <a href="#" className="hover:text-white transition-colors">
-                        Exhibitions
-                      </a>
-                    </li>
-                    <li>
-                      <a href="#" className="hover:text-white transition-colors">
-                        Speakers
-                      </a>
-                    </li>
-                    <li>
-                      <a href="#" className="hover:text-white transition-colors">
-                        Workshops
-                      </a>
-                    </li>
-                  </ul>
-                </div>
-
-                <div>
-                  <h3 className="text-xl font-semibold mb-4">Partners</h3>
-                  <ul className="space-y-2 text-gray-400">
-                    <li>
-                      <a href="#" className="hover:text-white transition-colors">
-                        Sponsors
-                      </a>
-                    </li>
-                    <li>
-                      <a href="#" className="hover:text-white transition-colors">
-                        Galleries
-                      </a>
-                    </li>
-                    <li>
-                      <a href="#" className="hover:text-white transition-colors">
-                        Institutions
-                      </a>
-                    </li>
-                    <li>
-                      <a href="#" className="hover:text-white transition-colors">
-                        Media
-                      </a>
-                    </li>
-                  </ul>
-                </div>
-
-                <div>
-                  <h3 className="text-xl font-semibold mb-4">Contact</h3>
-                  <ul className="space-y-2 text-gray-400">
-                    <li className="flex items-center space-x-2">
-                      <MapPin className="w-4 h-4" />
-                      <span>Dakar, Senegal</span>
-                    </li>
-                    <li className="flex items-center space-x-2">
-                      <Mail className="w-4 h-4" />
-                      <span>info@dakar2025.org</span>
-                    </li>
-                    <li className="flex items-center space-x-2">
-                      <Phone className="w-4 h-4" />
-                      <span>+221 33 XXX XXXX</span>
-                    </li>
-                  </ul>
-                </div>
-              </div>
-
-              <div className="border-t border-gray-800 mt-12 pt-8 text-center text-gray-400">
-                <p className="text-lg font-serif mb-2">Dakar 2025 — Pan-African Arts Renaissance</p>
-                <p className="text-sm">&copy; 2025 Dakar Arts Festival. All rights reserved.</p>
-              </div>
-            </div>
-          </footer> */}
+        <div className="relative min-h-screen bg-white">
+          <main className="relative z-10 pb-[100vh]">
+            <HeroSection />
+            <AboutDakarSection partnerLogos={partnerLogos} />
+            <ProgramHighlightsSection highlights={highlights} />
+            <WhatsHappeningSection items={whatsItems} />
+            <CuratedPavilionCarousel />
+            <WhenWhereSection />
+            <RegisterUpdatesSection />
+          </main>
+          <ParallaxFooter />
         </div>
       )}
     </>

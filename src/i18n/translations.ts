@@ -74,6 +74,20 @@ type Dict = {
             };
         };
     };
+    footer: {
+        quote: string;
+        contact: string;
+        email: string;
+        addressLabel: string;
+        address: string;
+        navTitle: string;
+        connectTitle: string;
+        instagram: string;
+        linkedin: string;
+        legalNotice: string;
+        rights: string;
+        band: string;
+    };
     highlights: Array<{ date: string; title: string; blurb: string }>;
 };
 
@@ -316,6 +330,20 @@ export const translations: Record<Locale, Dict> = {
                 },
             },
         },
+        footer: {
+            quote: 'Une scène panafricaine pour la culture, le design et le leadership Digital Africa.',
+            contact: 'Contact',
+            email: 'inbox@dakar2025.org',
+            addressLabel: 'Lieu',
+            address: 'Centre d’Exposition\nAlmadies, Dakar, Sénégal',
+            navTitle: 'Navigation',
+            connectTitle: 'Réseaux',
+            instagram: 'Instagram',
+            linkedin: 'LinkedIn',
+            legalNotice: 'MENTIONS LÉGALES',
+            rights: '©2025 Dakar 2025 — Tous droits réservés.',
+            band: 'AFRIQUE DIGITALE',
+        },
         highlights: [
             { date: 'Jeu • 15 mai 2025', title: 'Première de la soirée d’ouverture', blurb: 'Avant‑première avec tapis rouge et concert d’accueil au Grand Hall du Centre d’Exposition.' },
             { date: 'Ven • 16 mai 2025', title: 'Forum des industries créatives', blurb: 'Financement, distribution et co‑productions transcontinentales.' },
@@ -537,6 +565,20 @@ export const translations: Record<Locale, Dict> = {
                     whatsapp: 'WhatsApp',
                 },
             },
+        },
+        footer: {
+            quote: 'A Pan‑African stage for culture, design, and Digital Africa leadership.',
+            contact: 'Contact',
+            email: 'inbox@dakar2025.org',
+            addressLabel: 'Venue',
+            address: 'Exhibition Centre\nAlmadies, Dakar, Senegal',
+            navTitle: 'Navigation',
+            connectTitle: 'Connect',
+            instagram: 'Instagram',
+            linkedin: 'LinkedIn',
+            legalNotice: 'LEGAL NOTICE',
+            rights: '©2025 Dakar 2025 — All rights reserved.',
+            band: 'DIGITAL AFRICA',
         },
         highlights: [
             { date: 'Thu • May 15, 2025', title: 'Opening Night Premiere', blurb: 'Red-carpet screening and welcome concert at the Exhibition Centre Grand Hall.' },
