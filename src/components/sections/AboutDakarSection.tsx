@@ -22,33 +22,19 @@ const item: Variants = {
     visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: 'easeInOut' } },
 };
 
-function LedeHoverFlow({
-    text,
-    className,
-}: {
-    text: string;
-    className?: string;
-}) {
+function LedeHoverFlow({ text, className }: { text: string; className?: string }) {
     const [active, setActive] = useState<number | null>(null);
     const tokens = text.split(/(\s+)/);
     const highlightTransition = { duration: 0.5, ease: easeInOut };
 
     return (
-        <span
-            className={className}
-            onMouseLeave={() => setActive(null)}
-            style={{ lineHeight: '1.15' }}
-        >
+        <span className={className} onMouseLeave={() => setActive(null)} style={{ lineHeight: '1.15' }}>
             {tokens.map((t, i) => {
                 const isSpace = t.trim().length === 0;
                 if (isSpace) return <span key={i}>{t}</span>;
                 const isActive = active === i;
                 return (
-                    <span
-                        key={i}
-                        className="relative inline-block px-0.5"
-                        onMouseEnter={() => setActive(i)}
-                    >
+                    <span key={i} className="relative inline-block px-0.5" onMouseEnter={() => setActive(i)}>
                         {isActive && (
                             <motion.span
                                 layoutId="ledeHighlight"
@@ -57,11 +43,7 @@ function LedeHoverFlow({
                                 transition={highlightTransition}
                             />
                         )}
-                        <motion.span
-                            className="relative z-10"
-                            animate={{ color: isActive ? '#E67E22' : '#ffffff' }}
-                            transition={highlightTransition}
-                        >
+                        <motion.span className="relative z-10" animate={{ color: isActive ? '#E67E22' : '#ffffff' }} transition={highlightTransition}>
                             {t}
                         </motion.span>
                     </span>
@@ -76,18 +58,9 @@ export default function AboutDakarSection({ partnerLogos }: Props) {
 
     return (
         <section className="py-24 px-4 bg-[#2E5339] text-white">
-            <motion.div
-                className="max-w-7xl mx-auto"
-                initial="hidden"
-                whileInView="visible"
-                viewport={{ once: true, amount: 0.3 }}
-                variants={container}
-            >
+            <motion.div className="max-w-7xl mx-auto" initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.3 }} variants={container}>
                 <div className="grid md:grid-cols-12 gap-10 md:gap-12 items-start">
-                    <motion.h2
-                        variants={item}
-                        className="md:col-span-7 text-4xl md:text-6xl leading-tight font-sans text-white"
-                    >
+                    <motion.h2 variants={item} className="md:col-span-7 text-4xl md:text-6xl leading-tight font-sans text-white">
                         <LedeHoverFlow text={t('about.lede')} />
                     </motion.h2>
 
@@ -96,29 +69,47 @@ export default function AboutDakarSection({ partnerLogos }: Props) {
                             {t('about.supporting')}
                         </p>
 
-                        <a
-                            href="#program"
-                            className="group inline-flex items-center gap-2 mt-6 text-white hover:text-gray-200 transition-colors"
-                        >
-                            <span className="text-sm tracking-widest">{t('about.cta')}</span>
-                            <ArrowUpRight className="w-4 h-4 transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
-                        </a>
+                        <div className="mt-6 group">
+                            <a
+                                href="#program"
+                                className="block relative rounded-2xl overflow-hidden focus:outline-none focus-visible:ring-2 focus-visible:ring-white/50"
+                                aria-label="About image — go to program"
+                            >
+                                <div className="relative w-full h-60 sm:h-72 md:h-80">
+                                    <Image
+                                        src="/images/about-dakar.jpg"
+                                        alt="Exhibition Centre — Dakar"
+                                        fill
+                                        sizes="(min-width: 768px) 40rem, 100vw"
+                                        className="object-cover transition-transform duration-[4000ms] ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-[1.06]"
+                                    />
+                                    <span
+                                        aria-hidden
+                                        className="absolute inset-0 pointer-events-none transition-opacity duration-700 ease-in-out group-hover:opacity-0"
+                                        style={{
+                                            background:
+                                                'linear-gradient(180deg, rgba(255,255,255,0) 60%, rgba(46,83,57,0.85) 88%, rgba(46,83,57,1) 100%)',
+                                        }}
+                                    />
+                                </div>
+                            </a>
+
+                            <a
+                                href="#program"
+                                className="inline-flex items-center gap-2 mt-4 text-white hover:text-gray-200 transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-white/50"
+                                aria-label="About the Fair — go to program"
+                            >
+                                <span className="text-sm tracking-widest">{t('about.cta')}</span>
+                                <ArrowUpRight className="w-4 h-4 transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
+                            </a>
+                        </div>
                     </motion.div>
                 </div>
 
-                <motion.div
-                    variants={item}
-                    className="mt-16 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-8 place-items-center"
-                >
+                <motion.div variants={item} className="mt-16 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-8 place-items-center">
                     {partnerLogos.map((logo, i) => (
                         <div key={i} className="opacity-70 sm:hover:opacity-100 transition-opacity duration-300">
-                            <Image
-                                src={logo.src}
-                                alt={logo.alt}
-                                width={160}
-                                height={60}
-                                className="object-contain grayscale-0 sm:grayscale sm:hover:grayscale-0"
-                            />
+                            <Image src={logo.src} alt={logo.alt} width={160} height={60} className="object-contain grayscale-0 sm:grayscale sm:hover:grayscale-0" />
                         </div>
                     ))}
                 </motion.div>

@@ -14,7 +14,9 @@ type WhatsItem = {
 type Dict = {
     nav: {
         menu: string;
-        items: { exhibitions: string; learning: string; another: string; etc: string };
+        items: {
+            exhibitions: string; program: string; pavilion: string; voices: string; about: string; partners: string;
+        };
         langShort: { fr: 'FR'; en: 'EN' };
     };
     hero: { title: string; subtitle: string; register: string; explore: string };
@@ -51,6 +53,27 @@ type Dict = {
         readMore: string;
         events: WhatsItem[];
     };
+    register: {
+        badge: string;
+        title: string;
+        subtitle: string;
+        primary: string;
+        secondary: string;
+        disclaimer: string;
+        qr: {
+            label: string;
+            secure: string;
+            aria: string;
+            alt: string;
+            desc: string;
+            tag: {
+                program: string;
+                map: string;
+                calendar: string;
+                whatsapp: string;
+            };
+        };
+    };
     highlights: Array<{ date: string; title: string; blurb: string }>;
 };
 
@@ -60,9 +83,11 @@ export const translations: Record<Locale, Dict> = {
             menu: 'MENU',
             items: {
                 exhibitions: 'Expositions',
-                learning: 'Apprentissage et recherche',
-                another: 'Autre',
-                etc: 'Etc.',
+                program: 'Programme',
+                pavilion: 'Pavillon Curaté',
+                voices: 'Voix Mises en Avant',
+                about: 'À propos de Dakar 2025',
+                partners: 'Partenaires et Institutions'
             },
             langShort: { fr: 'FR', en: 'EN' },
         },
@@ -267,6 +292,30 @@ export const translations: Record<Locale, Dict> = {
                 },
             ],
         },
+        register: {
+            badge: 'Dernier appel',
+            title: 'Inscrivez‑vous et recevez les mises à jour',
+            subtitle:
+                'Réservez votre place et restez informé·e. Téléchargez notre kit de presse ou scannez pour obtenir le programme, les infos de lieu et des mises à jour en direct sur votre appareil.',
+            primary: 'S’inscrire',
+            secondary: 'Télécharger le kit de presse',
+            disclaimer:
+                'En vous inscrivant, vous acceptez de recevoir des communications essentielles liées à l’événement.',
+            qr: {
+                label: 'Scanner pour les mises à jour',
+                secure: 'Lien sécurisé',
+                aria: 'Ouvrir le lien des mises à jour',
+                alt: 'QR code vers le programme et les mises à jour',
+                desc:
+                    'Pointez votre appareil photo pour obtenir le programme en direct, les plans, l’ajout au calendrier et des notifications WhatsApp (optionnelles).',
+                tag: {
+                    program: 'Programme',
+                    map: 'Plans',
+                    calendar: 'Ajouter au calendrier',
+                    whatsapp: 'WhatsApp',
+                },
+            },
+        },
         highlights: [
             { date: 'Jeu • 15 mai 2025', title: 'Première de la soirée d’ouverture', blurb: 'Avant‑première avec tapis rouge et concert d’accueil au Grand Hall du Centre d’Exposition.' },
             { date: 'Ven • 16 mai 2025', title: 'Forum des industries créatives', blurb: 'Financement, distribution et co‑productions transcontinentales.' },
@@ -275,7 +324,14 @@ export const translations: Record<Locale, Dict> = {
     en: {
         nav: {
             menu: 'MENU',
-            items: { exhibitions: 'Exhibitions', learning: 'Learning and research', another: 'Another one', etc: 'Etc' },
+            items: {
+                exhibitions: 'Exhibitions',
+                program: 'Program',
+                pavilion: 'Curated Pavilion',
+                voices: 'Featured Voices',
+                about: 'About Dakar 2025',
+                partners: 'Partners & Institutions',
+            },
             langShort: { fr: 'FR', en: 'EN' },
         },
         hero: {
@@ -457,6 +513,30 @@ export const translations: Record<Locale, Dict> = {
                     alt: 'Closing gala in a large hall',
                 },
             ],
+        },
+        register: {
+            badge: 'Final Call',
+            title: 'Register and get the latest updates',
+            subtitle:
+                'Secure your spot and stay informed. Download our press kit, or scan to get schedule, venue details, and live updates to your device.',
+            primary: 'Register',
+            secondary: 'Download Press Kit',
+            disclaimer:
+                'By registering you agree to receive essential event communications.',
+            qr: {
+                label: 'Scan for updates',
+                secure: 'Secure link',
+                aria: 'Open updates link',
+                alt: 'QR code to program and updates',
+                desc:
+                    'Point your camera to get the live program, maps, add-to-calendar, and optional WhatsApp notifications.',
+                tag: {
+                    program: 'Program',
+                    map: 'Maps',
+                    calendar: 'Add to Calendar',
+                    whatsapp: 'WhatsApp',
+                },
+            },
         },
         highlights: [
             { date: 'Thu • May 15, 2025', title: 'Opening Night Premiere', blurb: 'Red-carpet screening and welcome concert at the Exhibition Centre Grand Hall.' },

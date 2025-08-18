@@ -24,6 +24,11 @@ const heroItem: Variants = {
     },
 };
 
+const navItem: Variants = {
+    hidden: { opacity: 0, y: 8 },
+    visible: { opacity: 1, y: 0, transition: { duration: 0.4, ease: 'easeOut' } },
+};
+
 export default function HeroSection() {
     const [menuOpen, setMenuOpen] = useState(false);
     const [langOpen, setLangOpen] = useState(false);
@@ -32,23 +37,32 @@ export default function HeroSection() {
 
     const textColor = menuOpen ? '#2C2C2C' : '#FFFFFF';
 
+    const navItems = [
+        { key: 'exhibitions', label: t('nav.items.exhibitions') },
+        { key: 'program', label: t('nav.items.program') },
+        { key: 'pavilion', label: t('nav.items.pavilion') },
+        { key: 'voices', label: t('nav.items.voices') },
+        { key: 'about', label: t('nav.items.about') },
+        { key: 'partners', label: t('nav.items.partners') },
+    ];
+
     return (
         <section className="relative h-screen overflow-hidden">
             <div className={`absolute inset-0 transition-transform duration-500 ease-in-out ${menuOpen ? 'translate-y-full' : 'translate-y-0'}`}>
                 <video
                     ref={videoRef}
                     className="absolute inset-0 w-full h-full object-cover"
-                    src="/videos/output.mp4"
+                    src="/videos/hero.mp4"
                     autoPlay
                     muted
                     loop
                     playsInline
                     preload="auto"
-                    poster="/videos/poster.jpg"
+                    poster="/videos/screenshot.png"
                 />
                 <div className="absolute inset-0 bg-black/50" />
                 <motion.div className="relative z-10 h-full" initial="hidden" animate="visible" variants={heroContainer}>
-                    <div className="absolute bottom-0 left-0 w-full px-4 md:px-10 pb-10 md:pb-14 max-w-5xl">
+                    <div className="absolute bottom-7 left-2 md:left-7 w-full px-0 md:px-10 pb-10 md:pb-14 max-w-5xl">
                         <motion.h1 variants={heroItem} className="text-left text-white font-serif leading-[1.05] text-5xl md:text-7xl">
                             {t('hero.title')}
                         </motion.h1>
@@ -67,17 +81,34 @@ export default function HeroSection() {
 
             <div className={`absolute inset-0 z-10 bg-[#F4F1EB] transition-transform duration-500 ease-in-out ${menuOpen ? 'translate-y-0' : '-translate-y-full'}`}>
                 <nav className="h-full w-full flex items-center justify-center">
-                    <ul className="text-[#2C2C2C] text-3xl md:text-5xl font-serif space-y-6 text-center">
-                        <li>{t('nav.items.exhibitions')}</li>
-                        <li>{t('nav.items.learning')}</li>
-                        <li>{t('nav.items.another')}</li>
-                        <li>{t('nav.items.etc')}</li>
-                    </ul>
+                    <motion.ul
+                        className="text-[#2C2C2C] text-3xl md:text-5xl font-serif space-y-6 text-center"
+                        initial="hidden"
+                        animate="visible"
+                        variants={{ visible: { transition: { staggerChildren: 0.08 } } }}
+                    >
+                        {navItems.map((item) => (
+                            <motion.li key={item.key} variants={navItem}>
+                                <button
+                                    type="button"
+                                    className="group inline-flex items-center gap-4 cursor-pointer select-none"
+                                >
+                                    <span className="relative inline-block h-6 w-6 text-[#2C2C2C] transition-transform duration-300 ease-out group-hover:rotate-45">
+                                        <span className="absolute left-1/2 top-1/2 h-px w-6 -translate-x-1/2 -translate-y-1/2 bg-current" />
+                                        <span className="absolute left-1/2 top-1/2 h-6 w-px -translate-x-1/2 -translate-y-1/2 bg-current" />
+                                    </span>
+                                    <span className="transition-colors duration-200 ease-out group-hover:text-[#E67E22]">
+                                        {item.label}
+                                    </span>
+                                </button>
+                            </motion.li>
+                        ))}
+                    </motion.ul>
                 </nav>
             </div>
 
             <header className="absolute top-0 left-0 w-full z-20">
-                <div className="relative h-60">
+                <div className="relative h-20">
                     <div className="absolute top-0 left-4">
                         <Image src={Logo} alt="Festival logo" priority width={0} height={0} sizes="200px" className="h-16 w-auto object-contain mt-4" />
                     </div>

@@ -92,7 +92,7 @@ export default function ProgramHighlightsSection({ highlights }: { highlights: H
     );
 
     return (
-        <section id="program" className="py-24 px-4 bg-white">
+        <section id="program" className="pt-24 pb-16 px-4 bg-white">
             <motion.div
                 className="max-w-7xl mx-auto"
                 initial="hidden"

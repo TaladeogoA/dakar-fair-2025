@@ -33,6 +33,11 @@ const headItem: Variants = {
     visible: { opacity: 1, y: 0, transition: { duration: 0.45, ease: 'easeInOut' } },
 };
 
+const overlayVariants: Variants = {
+    rest: { y: '100%', opacity: 0, transition: { duration: 0.35, ease: 'easeInOut' } },
+    hover: { y: '0%', opacity: 1, transition: { duration: 0.35, ease: 'easeInOut' } },
+};
+
 export default function WhatsHappeningSection({ items }: Props) {
     const { t } = useI18n();
     const sliderRef = useRef<SliderType | null>(null);
@@ -94,45 +99,61 @@ export default function WhatsHappeningSection({ items }: Props) {
                 </div>
             </motion.div>
 
+            {/* Full-bleed row: keep normal left padding, remove right padding so last card peeks at the viewport edge */}
             <div className="relative w-screen left-1/2 right-1/2 -ml-[50vw] -mr-[50vw]">
                 <div className="pl-4 md:pl-10">
                     <div className="pointer-events-none absolute right-0 top-0 bottom-0 w-10 bg-gradient-to-l from-white to-transparent z-10" />
                     <Slider ref={sliderRef} {...settings}>
                         {items.map((it) => (
                             <div key={it.id} className="px-3">
-                                <article className="group relative bg-white rounded-xl border border-gray-200 overflow-hidden shrink-0 w-[20rem] sm:w-[24rem] lg:w-[28rem]">
-                                    <div className="relative h-44 sm:h-56 w-full overflow-hidden">
+                                {/* Card: initial state is full image; info panel slides up on hover and slides down on leave */}
+                                <motion.article
+                                    initial="rest"
+                                    animate="rest"
+                                    whileHover="hover"
+                                    className="group relative overflow-hidden rounded-xl border border-gray-200 bg-white/0 shrink-0 w-[20rem] sm:w-[24rem] lg:w-[28rem]"
+                                >
+                                    {/* Image layer */}
+                                    <div className="relative h-56 sm:h-64 w-full">
                                         <Image
                                             src={it.image}
                                             alt={it.alt}
                                             fill
                                             sizes="(min-width: 1024px) 28rem, (min-width: 640px) 24rem, 20rem"
-                                            className="object-cover"
+                                            className="object-cover transition-transform duration-700 ease-in-out group-hover:scale-[1.03]"
                                         />
                                         <span className="absolute inset-0 ring-1 ring-black/5" />
                                     </div>
-                                    <div className="p-4">
-                                        <div className="text-sm italic" style={{ color: '#2E5339' }}>
-                                            {it.category}
+
+                                    {/* Sliding overlay with details */}
+                                    <motion.div
+                                        variants={overlayVariants}
+                                        className="absolute inset-x-0 bottom-0 bg-white"
+                                    >
+                                        <div className="p-4">
+                                            <div className="text-sm italic" style={{ color: '#2E5339' }}>
+                                                {it.category}
+                                            </div>
+                                            <h3 className="mt-2 text-xl font-semibold leading-snug text-gray-900">
+                                                {it.title}
+                                            </h3>
+                                            <div className="mt-1 text-gray-500">
+                                                <div>{it.venue}</div>
+                                                <div className="font-medium">{it.dateLine}</div>
+                                            </div>
+                                            <p className="mt-2 text-sm text-gray-700">{it.summary}</p>
+                                            <a
+                                                href="#read"
+                                                className="mt-3 inline-block text-sm font-medium tracking-wide"
+                                                style={{ color: '#2E5339' }}
+                                            >
+                                                {t('whats.readMore')} +
+                                            </a>
                                         </div>
-                                        <h3 className="mt-2 text-xl font-semibold leading-snug text-gray-900">
-                                            {it.title}
-                                        </h3>
-                                        <div className="mt-1 text-gray-500">
-                                            <div>{it.venue}</div>
-                                            <div className="font-medium">{it.dateLine}</div>
-                                        </div>
-                                        <p className="mt-2 text-sm text-gray-700">{it.summary}</p>
-                                        <a
-                                            href="#read"
-                                            className="mt-3 inline-block text-sm font-medium tracking-wide"
-                                            style={{ color: '#2E5339' }}
-                                        >
-                                            {t('whats.readMore')} +
-                                        </a>
-                                    </div>
+                                    </motion.div>
+
                                     <span className="absolute inset-0 rounded-xl pointer-events-none ring-1 ring-black/5" />
-                                </article>
+                                </motion.article>
                             </div>
                         ))}
                     </Slider>

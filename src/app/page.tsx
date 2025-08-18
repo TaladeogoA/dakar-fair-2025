@@ -10,6 +10,7 @@ import AboutDakarSection from '@/components/sections/AboutDakarSection';
 import CuratedPavilionCarousel from '@/components/sections/CuratedPavilionCarousel';
 import HeroSection from '@/components/sections/HeroSection';
 import ProgramHighlightsSection from '@/components/sections/ProgramHighlightsSection';
+import RegisterUpdatesSection from '@/components/sections/RegisterUpdatesSection';
 import WhatsHappeningSection from '@/components/sections/WhatsHappeningSection';
 import WhenWhereSection from '@/components/sections/WhenWhereSection';
 import { useI18n } from '@/i18n/I18nProvider';
@@ -43,15 +44,7 @@ const Home = () => {
           <WhatsHappeningSection items={whatsItems} />
           <CuratedPavilionCarousel />
           <WhenWhereSection />
-
-          {/* Final CTA */}
-          {/* <section className="py-20 px-4" style={{ backgroundColor: '#F5E6D3' }}>
-            <div className="max-w-4xl mx-auto text-center">
-              <h2 className="text-5xl font-serif mb-8">Be part of Africa&apos;s cultural renaissance.</h2>
-              <p className="text-xl text-gray-700 mb-12">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Join us for five transformative days in Dakar.</p>
-              <button className="bg-orange-500 hover:bg-orange-600 text-white px-12 py-6 rounded-lg text-xl font-medium transition-colors">Register Now</button>
-            </div>
-          </section> */}
+          <RegisterUpdatesSection />
 
           {/* Footer */}
           {/* <footer className="bg-gray-900 text-white py-16 px-4">
