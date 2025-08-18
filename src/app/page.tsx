@@ -11,7 +11,6 @@ import CuratedPavilionCarousel from '@/components/sections/CuratedPavilionCarous
 import HeroSection from '@/components/sections/HeroSection';
 import ParallaxFooter from '@/components/sections/ParallaxFooter';
 import ProgramHighlightsSection from '@/components/sections/ProgramHighlightsSection';
-import RegisterUpdatesSection from '@/components/sections/RegisterUpdatesSection';
 import WhatsHappeningSection from '@/components/sections/WhatsHappeningSection';
 import WhenWhereSection from '@/components/sections/WhenWhereSection';
 import { useI18n } from '@/i18n/I18nProvider';
@@ -46,7 +45,6 @@ const Home = () => {
             <WhatsHappeningSection items={whatsItems} />
             <CuratedPavilionCarousel />
             <WhenWhereSection />
-            <RegisterUpdatesSection />
           </main>
           <ParallaxFooter />
         </div>
