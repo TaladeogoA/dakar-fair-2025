@@ -106,14 +106,12 @@ export default function WhatsHappeningSection({ items }: Props) {
                     <Slider ref={sliderRef} {...settings}>
                         {items.map((it) => (
                             <div key={it.id} className="px-3">
-                                {/* Card: initial state is full image; info panel slides up on hover and slides down on leave */}
                                 <motion.article
                                     initial="rest"
                                     animate="rest"
                                     whileHover="hover"
-                                    className="group relative overflow-hidden rounded-xl border border-gray-200 bg-white/0 shrink-0 w-[20rem] sm:w-[24rem] lg:w-[28rem]"
+                                    className="hidden lg:block group relative overflow-hidden rounded-xl border border-gray-200 bg-white/0 shrink-0 w-[20rem] sm:w-[24rem] lg:w-[28rem]"
                                 >
-                                    {/* Image layer */}
                                     <div className="relative h-56 sm:h-64 w-full">
                                         <Image
                                             src={it.image}
@@ -124,8 +122,6 @@ export default function WhatsHappeningSection({ items }: Props) {
                                         />
                                         <span className="absolute inset-0 ring-1 ring-black/5" />
                                     </div>
-
-                                    {/* Sliding overlay with details */}
                                     <motion.div
                                         variants={overlayVariants}
                                         className="absolute inset-x-0 bottom-0 bg-white"
@@ -154,6 +150,39 @@ export default function WhatsHappeningSection({ items }: Props) {
 
                                     <span className="absolute inset-0 rounded-xl pointer-events-none ring-1 ring-black/5" />
                                 </motion.article>
+
+                                <article className="lg:hidden relative overflow-hidden rounded-xl border border-gray-200 bg-white shrink-0 w-[20rem] sm:w-[24rem]">
+                                    <div className="relative h-56 sm:h-64 w-full">
+                                        <Image
+                                            src={it.image}
+                                            alt={it.alt}
+                                            fill
+                                            sizes="(min-width: 640px) 24rem, 20rem"
+                                            className="object-cover"
+                                        />
+                                        <span className="absolute inset-0 ring-1 ring-black/5" />
+                                    </div>
+                                    <div className="p-4 bg-white">
+                                        <div className="text-sm italic" style={{ color: '#2E5339' }}>
+                                            {it.category}
+                                        </div>
+                                        <h3 className="mt-2 text-xl font-semibold leading-snug text-gray-900">
+                                            {it.title}
+                                        </h3>
+                                        <div className="mt-1 text-gray-500">
+                                            <div>{it.venue}</div>
+                                            <div className="font-medium">{it.dateLine}</div>
+                                        </div>
+                                        <p className="mt-2 text-sm text-gray-700">{it.summary}</p>
+                                        <a
+                                            href="#read"
+                                            className="mt-3 inline-block text-sm font-medium tracking-wide"
+                                            style={{ color: '#2E5339' }}
+                                        >
+                                            {t('whats.readMore')} +
+                                        </a>
+                                    </div>
+                                </article>
                             </div>
                         ))}
                     </Slider>

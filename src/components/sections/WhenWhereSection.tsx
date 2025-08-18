@@ -53,73 +53,98 @@ export default function WhenWhereSection() {
     ];
 
     return (
-        <section id="when-where" className="relative bg-white px-4 py-24">
+        // Prevent decorative glows from causing horizontal scroll on small screens
+        <section id="when-where" className="relative bg-white px-4 py-20 sm:py-24 overflow-x-clip">
             <div
                 aria-hidden
-                className="pointer-events-none absolute -top-20 right-0 w-[28rem] h-[28rem] rounded-full blur-3xl opacity-15"
-                style={{ background: 'radial-gradient(closest-side, rgba(46,83,57,0.20), rgba(230,126,34,0.05), transparent)' }}
+                className="pointer-events-none absolute -top-16 sm:-top-20 right-0 w-56 h-56 sm:w-[22rem] sm:h-[22rem] rounded-full blur-3xl opacity-15"
+                style={{
+                    background:
+                        'radial-gradient(closest-side, rgba(46,83,57,0.20), rgba(230,126,34,0.05), transparent)',
+                }}
             />
             <div
                 aria-hidden
-                className="pointer-events-none absolute bottom-[-6rem] left-[-6rem] w-[22rem] h-[22rem] rounded-full blur-3xl opacity-10"
-                style={{ background: 'radial-gradient(closest-side, rgba(230,126,34,0.18), rgba(46,83,57,0.08), transparent)' }}
+                className="pointer-events-none absolute bottom-[-4rem] left-[-4rem] w-48 h-48 sm:w-[18rem] sm:h-[18rem] rounded-full blur-3xl opacity-10"
+                style={{
+                    background:
+                        'radial-gradient(closest-side, rgba(230,126,34,0.18), rgba(46,83,57,0.08), transparent)',
+                }}
             />
 
-            <motion.div className="max-w-7xl mx-auto" initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.25 }} variants={container}>
-                <motion.div variants={item} className="mb-10">
+            <motion.div
+                className="max-w-7xl mx-auto"
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ once: true, amount: 0.25 }}
+                variants={container}
+            >
+                <motion.div variants={item} className="mb-8 sm:mb-10">
                     <div className="flex items-center gap-3">
-                        <span className="inline-block h-1 w-12 rounded-full" style={{ backgroundColor: '#E67E22' }} />
-                        <span className="uppercase tracking-[0.2em] text-xs" style={{ color: '#2E5339' }}>
+                        <span className="inline-block h-1 w-10 sm:w-12 rounded-full" style={{ backgroundColor: '#E67E22' }} />
+                        <span className="uppercase tracking-[0.2em] text-[10px] sm:text-xs" style={{ color: '#2E5339' }}>
                             {t('whenwhere.kicker')}
                         </span>
                     </div>
-                    <h2 className="mt-4 text-3xl md:text-5xl font-serif tracking-tight text-[#2E5339]">
+                    <h2 className="mt-4 text-2xl sm:text-3xl md:text-5xl font-serif tracking-tight text-[#2E5339]">
                         {t('whenwhere.title')}
                     </h2>
-                    <p className="mt-3 text-gray-600 max-w-2xl">
-                        {t('whenwhere.desc')}
-                    </p>
+                    <p className="mt-3 text-gray-600 max-w-2xl">{t('whenwhere.desc')}</p>
                 </motion.div>
 
-                <div className="grid md:grid-cols-12 gap-10 md:gap-12 items-start">
+                <div className="grid md:grid-cols-12 gap-8 md:gap-12 items-start">
+                    {/* Left column cards */}
                     <motion.div variants={item} className="md:col-span-5 space-y-6">
-                        <motion.div whileHover={reduceMotion ? undefined : { y: -2 }} transition={hoverLift} className="relative overflow-hidden rounded-2xl border border-gray-200 bg-white/90 p-6 shadow-sm">
+                        <motion.div
+                            whileHover={reduceMotion ? undefined : { y: -2 }}
+                            transition={hoverLift}
+                            className="relative overflow-hidden rounded-2xl border border-gray-200 bg-white/90 p-5 sm:p-6 shadow-sm"
+                        >
                             <div className="absolute left-0 top-0 h-1 w-full" style={{ background: 'linear-gradient(90deg,#E67E22,#2E5339)' }} />
                             <div className="flex items-start gap-4">
                                 <div className="shrink-0 rounded-lg p-2.5" style={{ backgroundColor: '#2E5339' }}>
                                     <Calendar className="h-5 w-5 text-white" />
                                 </div>
                                 <div>
-                                    <h3 className="text-lg font-semibold tracking-tight text-gray-900">
+                                    <h3 className="text-base sm:text-lg font-semibold tracking-tight text-gray-900">
                                         {t('whenwhere.datesCardTitle')}
                                     </h3>
-                                    <p className="mt-1 text-sm text-gray-600">
-                                        {t('whenwhere.datesCardDesc')}
-                                    </p>
+                                    <p className="mt-1 text-sm text-gray-600">{t('whenwhere.datesCardDesc')}</p>
                                 </div>
                             </div>
                         </motion.div>
 
-                        <motion.div whileHover={reduceMotion ? undefined : { y: -2 }} transition={hoverLift} className="relative overflow-hidden rounded-2xl border border-gray-200 bg-white/90 p-6 shadow-sm">
+                        <motion.div
+                            whileHover={reduceMotion ? undefined : { y: -2 }}
+                            transition={hoverLift}
+                            className="relative overflow-hidden rounded-2xl border border-gray-200 bg-white/90 p-5 sm:p-6 shadow-sm"
+                        >
                             <div className="absolute left-0 top-0 h-1 w-full" style={{ backgroundColor: '#2E5339' }} />
                             <div className="flex items-start gap-4">
                                 <div className="shrink-0 rounded-lg p-2.5" style={{ backgroundColor: '#E67E22' }}>
                                     <MapPin className="h-5 w-5 text-white" />
                                 </div>
-                                <div>
-                                    <h3 className="text-lg font-semibold tracking-tight text-gray-900">
+                                <div className="w-full">
+                                    <h3 className="text-base sm:text-lg font-semibold tracking-tight text-gray-900">
                                         {t('whenwhere.venueTitle')}
                                     </h3>
-                                    <p className="mt-1 text-sm text-gray-600">
-                                        {t('whenwhere.venueDesc')}
-                                    </p>
-                                    <div className="mt-4 flex gap-3">
-                                        <AnimatedButton variant="primary" className="px-5">
+                                    <p className="mt-1 text-sm text-gray-600">{t('whenwhere.venueDesc')}</p>
+                                    <div className="mt-4 flex flex-col sm:flex-row sm:items-center gap-3">
+                                        <AnimatedButton variant="primary" className="px-5 w-full sm:w-auto">
                                             {t('whenwhere.directions')}
                                         </AnimatedButton>
-                                        <a href="#travel" className="group inline-flex items-center gap-2 text-sm tracking-widest" style={{ color: '#2E5339' }}>
+                                        <a
+                                            href="#travel"
+                                            className="group inline-flex items-center gap-2 text-sm tracking-widest text-[#2E5339]"
+                                        >
                                             {t('whenwhere.planTravel')}
-                                            <svg className="h-4 w-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                                            <svg
+                                                className="h-4 w-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
+                                                viewBox="0 0 24 24"
+                                                fill="none"
+                                                stroke="currentColor"
+                                                strokeWidth="2"
+                                            >
                                                 <path d="M7 17L17 7" />
                                                 <path d="M8 7h9v9" />
                                             </svg>
@@ -129,8 +154,8 @@ export default function WhenWhereSection() {
                             </div>
                         </motion.div>
 
-                        <motion.div variants={item} id="travel" className="rounded-2xl border border-gray-200 bg-white/90 p-6 shadow-sm">
-                            <div className="mb-4 text-sm font-semibold tracking-widest" style={{ color: '#2E5339' }}>
+                        <motion.div variants={item} id="travel" className="rounded-2xl border border-gray-200 bg-white/90 p-5 sm:p-6 shadow-sm">
+                            <div className="mb-4 text-sm font-semibold tracking-widest text-[#2E5339]">
                                 {t('whenwhere.travelNotes')}
                             </div>
                             <ul className="grid grid-cols-1 gap-3 text-sm text-gray-700">
@@ -154,9 +179,11 @@ export default function WhenWhereSection() {
                         </motion.div>
                     </motion.div>
 
+                    {/* Right column: Map */}
                     <motion.div variants={item} className="md:col-span-7">
                         <div className="relative overflow-hidden rounded-2xl border border-gray-200 shadow-[0_10px_30px_rgba(0,0,0,0.06)]">
-                            <div className="relative h-[50vw] md:h-[28rem]">
+                            {/* Use aspect-ratio on small screens for a stable height; fixed height on md+ */}
+                            <div className="relative w-full aspect-[16/11] sm:aspect-[16/9] md:h-[28rem] md:aspect-auto">
                                 <iframe
                                     title="Map — Exhibition Centre, Dakar"
                                     className="absolute inset-0 h-full w-full"
@@ -169,26 +196,29 @@ export default function WhenWhereSection() {
                                     <div className="relative flex h-8 w-8 items-center justify-center rounded-full" style={{ backgroundColor: '#E67E22' }}>
                                         <MapPin className="h-4 w-4 text-white" />
                                         {!reduceMotion && (
-                                            <span className="absolute -z-10 block h-8 w-8 rounded-full" style={{ boxShadow: '0 0 0 0 rgba(230,126,34,0.45)' }} />
+                                            <span
+                                                className="absolute -z-10 block h-8 w-8 rounded-full"
+                                                style={{ boxShadow: '0 0 0 0 rgba(230,126,34,0.45)' }}
+                                            />
                                         )}
                                     </div>
                                 </div>
                             </div>
 
-                            <div className="flex flex-wrap items-center gap-4 border-t border-gray-200 bg-white/85 px-4 py-3">
-                                <div className="inline-flex items-center gap-2 text-xs text-gray-700">
+                            <div className="flex flex-wrap items-center gap-3 sm:gap-4 border-t border-gray-200 bg-white/85 px-3 sm:px-4 py-3">
+                                <div className="inline-flex items-center gap-2 text-[11px] sm:text-xs text-gray-700">
                                     <Plane className="h-4 w-4" style={{ color: '#2E5339' }} />
                                     <span>{t('whenwhere.transport.dss')}</span>
                                 </div>
-                                <div className="inline-flex items-center gap-2 text-xs text-gray-700">
+                                <div className="inline-flex items-center gap-2 text-[11px] sm:text-xs text-gray-700">
                                     <Train className="h-4 w-4" style={{ color: '#2E5339' }} />
                                     <span>{t('whenwhere.transport.ter')}</span>
                                 </div>
-                                <div className="inline-flex items-center gap-2 text-xs text-gray-700">
+                                <div className="inline-flex items-center gap-2 text-[11px] sm:text-xs text-gray-700">
                                     <Bus className="h-4 w-4" style={{ color: '#2E5339' }} />
                                     <span>{t('whenwhere.transport.shuttle')}</span>
                                 </div>
-                                <div className="inline-flex items-center gap-2 text-xs text-gray-700">
+                                <div className="inline-flex items-center gap-2 text-[11px] sm:text-xs text-gray-700">
                                     <Car className="h-4 w-4" style={{ color: '#2E5339' }} />
                                     <span>{t('whenwhere.transport.parking')}</span>
                                 </div>
@@ -197,7 +227,7 @@ export default function WhenWhereSection() {
                     </motion.div>
                 </div>
 
-                <motion.div variants={item} className="mt-12">
+                <motion.div variants={item} className="mt-10 sm:mt-12">
                     <div className="mb-4 text-sm font-semibold tracking-widest" style={{ color: '#2E5339' }}>
                         {t('whenwhere.accessibilityTitle')}
                     </div>
@@ -205,8 +235,16 @@ export default function WhenWhereSection() {
                         {badges.map((b, i) => {
                             const Icon = b.icon;
                             return (
-                                <motion.div key={b.label} whileHover={reduceMotion ? undefined : { y: -2 }} transition={hoverLift} className="group flex items-center gap-2 rounded-lg border border-gray-200 bg-white/90 px-3 py-2 text-xs text-gray-800">
-                                    <span className="inline-flex h-6 w-6 items-center justify-center rounded-md" style={{ backgroundColor: i % 3 === 0 ? '#2E5339' : 'rgba(230,126,34,0.12)' }}>
+                                <motion.div
+                                    key={b.label}
+                                    whileHover={reduceMotion ? undefined : { y: -2 }}
+                                    transition={hoverLift}
+                                    className="group flex items-center gap-2 rounded-lg border border-gray-200 bg-white/90 px-2.5 sm:px-3 py-2 text-[11px] sm:text-xs text-gray-800"
+                                >
+                                    <span
+                                        className="inline-flex h-6 w-6 items-center justify-center rounded-md"
+                                        style={{ backgroundColor: i % 3 === 0 ? '#2E5339' : 'rgba(230,126,34,0.12)' }}
+                                    >
                                         <Icon className="h-3.5 w-3.5" style={{ color: i % 3 === 0 ? '#fff' : '#E67E22' }} />
                                     </span>
                                     <span className="tracking-wide">{b.label}</span>
