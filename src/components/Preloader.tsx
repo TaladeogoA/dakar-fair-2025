@@ -164,7 +164,6 @@ const Preloader = ({ onComplete }: PreloaderProps) => {
             className="fixed inset-0 z-50 flex items-center justify-center bg-[#F4F1EB]"
         >
             <div className="flex flex-col items-center gap-5">
-                {/* ... your SVG stays unchanged ... */}
                 <svg
                     ref={svgRef}
                     xmlns="http://www.w3.org/2000/svg"

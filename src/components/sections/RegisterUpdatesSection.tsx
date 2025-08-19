@@ -74,7 +74,6 @@ export default function RegisterUpdatesSection() {
                                 onClick={handleRegisterClick}
                                 ariaLabel={t('register.primary')}
                                 className="gap-2"
-                            // Primary keeps brand colors; override here if needed via `scheme`
                             >
                                 <span>{t('register.primary')}</span>
                                 <ArrowRight className="h-4 w-4" />

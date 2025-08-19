@@ -13,6 +13,7 @@ import ParallaxFooter from '@/components/sections/ParallaxFooter';
 import ProgramHighlightsSection from '@/components/sections/ProgramHighlightsSection';
 import WhatsHappeningSection from '@/components/sections/WhatsHappeningSection';
 import WhenWhereSection from '@/components/sections/WhenWhereSection';
+import BackToTopButton from '@/components/ui/BackToTopButton';
 import { useI18n } from '@/i18n/I18nProvider';
 import { translations } from '@/i18n/translations';
 import { useEffect, useMemo, useState } from 'react';
@@ -70,6 +71,7 @@ const Home = () => {
           <WhenWhereSection />
         </main>
         <ParallaxFooter />
+        <BackToTopButton />
       </div>
     </>
   );

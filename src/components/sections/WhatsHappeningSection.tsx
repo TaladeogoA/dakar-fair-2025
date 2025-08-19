@@ -99,14 +99,12 @@ export default function WhatsHappeningSection({ items }: Props) {
                 </div>
             </motion.div>
 
-            {/* Full-bleed row: keep normal left padding, remove right padding so last card peeks at the viewport edge */}
             <div className="relative w-screen left-1/2 right-1/2 -ml-[50vw] -mr-[50vw]">
                 <div className="pl-4 md:pl-10">
                     <div className="pointer-events-none absolute right-0 top-0 bottom-0 w-10 bg-gradient-to-l from-white to-transparent z-10" />
                     <Slider ref={sliderRef} {...settings}>
                         {items.map((it) => (
                             <div key={it.id} className="px-3">
-                                {/* Desktop/Large: hover-reveal panel */}
                                 <motion.article
                                     initial="rest"
                                     animate="rest"
@@ -149,7 +147,6 @@ export default function WhatsHappeningSection({ items }: Props) {
                                     <span className="absolute inset-0 rounded-xl pointer-events-none ring-1 ring-black/5" />
                                 </motion.article>
 
-                                {/* Mobile/Small: static panel */}
                                 <article className="lg:hidden relative overflow-hidden rounded-xl border border-gray-200 bg-white shrink-0 w-[20rem] sm:w-[24rem]">
                                     <div className="relative h-56 sm:h-64 w-full">
                                         <Image
@@ -168,7 +165,6 @@ export default function WhatsHappeningSection({ items }: Props) {
                                         <h3 className="mt-2 text-xl font-semibold leading-snug text-gray-900">
                                             {it.title}
                                         </h3>
-                                        {/* Removed venue/date */}
                                         <p className="mt-2 text-sm text-gray-700">{it.summary}</p>
                                         <a
                                             href="#read"
