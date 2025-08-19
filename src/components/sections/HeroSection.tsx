@@ -62,7 +62,7 @@ export default function HeroSection() {
                 />
                 <div className="absolute inset-0 bg-black/50" />
                 <motion.div className="relative z-10 h-full" initial="hidden" animate="visible" variants={heroContainer}>
-                    <div className="absolute bottom-7 left-2 md:left-7 w-full px-0 md:px-10 pb-10 md:pb-14 max-w-5xl">
+                    <div className="absolute bottom-7 left-2 md:left-7 w-full px-2 md:px-10 pb-10 md:pb-14 max-w-5xl">
                         <motion.h1 variants={heroItem} className="text-left text-white font-serif leading-[1.05] text-5xl md:text-7xl">
                             {t('hero.title')}
                         </motion.h1>
@@ -71,7 +71,7 @@ export default function HeroSection() {
                             {t('hero.subtitle')}
                         </motion.p>
 
-                        <motion.div variants={heroItem} className="mt-6 md:mt-8 flex items-center gap-4">
+                        <motion.div variants={heroItem} className="px-2 md:px-0 mt-6 md:mt-8 flex items-stretch gap-4">
                             <AnimatedButton variant="primary">{t('hero.register')}</AnimatedButton>
                             <AnimatedButton variant="secondary">{t('hero.explore')}</AnimatedButton>
                         </motion.div>
