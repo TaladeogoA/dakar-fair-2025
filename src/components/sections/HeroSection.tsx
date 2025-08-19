@@ -71,6 +71,14 @@ export default function HeroSection() {
                             {t('hero.subtitle')}
                         </motion.p>
 
+                        <motion.div variants={heroItem} className="mt-3 md:mt-4 text-left text-white/80 text-sm md:text-base">
+                            <div className="flex flex-col md:flex-row md:items-center gap-1 md:gap-3">
+                                <span>{t('hero.dates')}</span>
+                                <span className="hidden md:inline">•</span>
+                                <span>{t('hero.venue')}</span>
+                            </div>
+                        </motion.div>
+
                         <motion.div variants={heroItem} className="px-2 md:px-0 mt-6 md:mt-8 flex items-stretch gap-4">
                             <AnimatedButton variant="primary">{t('hero.register')}</AnimatedButton>
                             <AnimatedButton variant="secondary">{t('hero.explore')}</AnimatedButton>

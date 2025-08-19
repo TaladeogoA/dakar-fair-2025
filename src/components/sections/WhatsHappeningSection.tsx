@@ -106,6 +106,7 @@ export default function WhatsHappeningSection({ items }: Props) {
                     <Slider ref={sliderRef} {...settings}>
                         {items.map((it) => (
                             <div key={it.id} className="px-3">
+                                {/* Desktop/Large: hover-reveal panel */}
                                 <motion.article
                                     initial="rest"
                                     animate="rest"
@@ -133,10 +134,7 @@ export default function WhatsHappeningSection({ items }: Props) {
                                             <h3 className="mt-2 text-xl font-semibold leading-snug text-gray-900">
                                                 {it.title}
                                             </h3>
-                                            <div className="mt-1 text-gray-500">
-                                                <div>{it.venue}</div>
-                                                <div className="font-medium">{it.dateLine}</div>
-                                            </div>
+                                            {/* Removed venue/date */}
                                             <p className="mt-2 text-sm text-gray-700">{it.summary}</p>
                                             <a
                                                 href="#read"
@@ -151,6 +149,7 @@ export default function WhatsHappeningSection({ items }: Props) {
                                     <span className="absolute inset-0 rounded-xl pointer-events-none ring-1 ring-black/5" />
                                 </motion.article>
 
+                                {/* Mobile/Small: static panel */}
                                 <article className="lg:hidden relative overflow-hidden rounded-xl border border-gray-200 bg-white shrink-0 w-[20rem] sm:w-[24rem]">
                                     <div className="relative h-56 sm:h-64 w-full">
                                         <Image
@@ -169,10 +168,7 @@ export default function WhatsHappeningSection({ items }: Props) {
                                         <h3 className="mt-2 text-xl font-semibold leading-snug text-gray-900">
                                             {it.title}
                                         </h3>
-                                        <div className="mt-1 text-gray-500">
-                                            <div>{it.venue}</div>
-                                            <div className="font-medium">{it.dateLine}</div>
-                                        </div>
+                                        {/* Removed venue/date */}
                                         <p className="mt-2 text-sm text-gray-700">{it.summary}</p>
                                         <a
                                             href="#read"
