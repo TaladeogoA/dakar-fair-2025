@@ -40,3 +40,6 @@ npm install
 npm run dev
 Visit http://localhost:3000
 ```
+
+## Live Demo
+Explore the live demo at [dakar-fair-2025.vercel.app](https://dakar-fair-2025.vercel.app)
