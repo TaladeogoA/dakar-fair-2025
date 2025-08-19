@@ -15,10 +15,11 @@ import WhatsHappeningSection from '@/components/sections/WhatsHappeningSection';
 import WhenWhereSection from '@/components/sections/WhenWhereSection';
 import { useI18n } from '@/i18n/I18nProvider';
 import { translations } from '@/i18n/translations';
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 
 const Home = () => {
   const [loading, setLoading] = useState(true);
+  const [contentReady, setContentReady] = useState(false);
   const { locale } = useI18n();
 
   const partnerLogos = [
@@ -33,22 +34,43 @@ const Home = () => {
   const highlights = useMemo(() => translations[locale].highlights, [locale]);
   const whatsItems = useMemo(() => translations[locale].whats.events, [locale]);
 
+  const handlePreloaderComplete = () => {
+    setLoading(false);
+    setTimeout(() => {
+      setContentReady(true);
+    }, 100);
+  };
+
+  useEffect(() => {
+    if (loading) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'unset';
+    }
+
+    return () => {
+      document.body.style.overflow = 'unset';
+    };
+  }, [loading]);
+
   return (
     <>
-      {loading && <Preloader onComplete={() => setLoading(false)} />}
-      {!loading && (
-        <div className="relative min-h-screen bg-white">
-          <main className="relative z-10 pb-[100vh]">
-            <HeroSection />
-            <AboutDakarSection partnerLogos={partnerLogos} />
-            <ProgramHighlightsSection highlights={highlights} />
-            <WhatsHappeningSection items={whatsItems} />
-            <CuratedPavilionCarousel />
-            <WhenWhereSection />
-          </main>
-          <ParallaxFooter />
-        </div>
-      )}
+      {loading && <Preloader onComplete={handlePreloaderComplete} />}
+      <div
+        className={`relative min-h-screen bg-white transition-opacity duration-300 ${contentReady ? 'opacity-100' : 'opacity-0'
+          }`}
+        style={{ visibility: loading ? 'hidden' : 'visible' }}
+      >
+        <main className="relative z-10 pb-[100vh]">
+          <HeroSection />
+          <AboutDakarSection partnerLogos={partnerLogos} />
+          <ProgramHighlightsSection highlights={highlights} />
+          <WhatsHappeningSection items={whatsItems} />
+          <CuratedPavilionCarousel />
+          <WhenWhereSection />
+        </main>
+        <ParallaxFooter />
+      </div>
     </>
   );
 };

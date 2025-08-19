@@ -49,7 +49,7 @@ export default function FeaturedVoicesSection() {
                                     muted
                                     loop
                                     playsInline
-                                    poster="/videos/poster.jpg"
+                                    poster="/videos/screenshot.png"
                                 />
                                 <div className="absolute inset-0 bg-gradient-to-t from-black/25 via-black/0 to-black/0 pointer-events-none" />
                                 <div className="absolute bottom-3 left-3 right-3 flex items-center justify-between">
