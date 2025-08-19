@@ -31,12 +31,13 @@ export default function CuratedPavilionCarousel() {
     return (
         <section id="curated-pavilion" className="relative w-full" aria-label="Curated Pavilion — slideshow">
             <div className="relative w-full h-[70vh] md:h-[78vh] overflow-hidden">
+                <div className="absolute inset-0 z-0 bg-white" />
                 {images.map((img, i) => {
                     const isActive = i === idx;
                     return (
                         <motion.div
                             key={img.src}
-                            className="absolute inset-0 z-0 will-change-[opacity]"
+                            className="absolute inset-0 z-10 will-change-[opacity]"
                             initial={{ opacity: i === 0 ? 1 : 0 }}
                             animate={{ opacity: isActive ? 1 : 0 }}
                             transition={{ duration: FADE_S, ease: easeInOut }}
@@ -47,9 +48,9 @@ export default function CuratedPavilionCarousel() {
                     );
                 })}
 
-                <div className="pointer-events-none absolute inset-0 z-10 bg-[linear-gradient(180deg,rgba(0,0,0,0.05)_0%,rgba(0,0,0,0.25)_55%,rgba(0,0,0,0.55)_100%)]" />
+                <div className="pointer-events-none absolute inset-0 z-20 bg-[linear-gradient(180deg,rgba(0,0,0,0.05)_0%,rgba(0,0,0,0.25)_55%,rgba(0,0,0,0.55)_100%)]" />
 
-                <div className="absolute left-0 right-0 bottom-0 z-20">
+                <div className="absolute left-0 right-0 bottom-0 z-30">
                     <div className="max-w-7xl mx-auto px-4 pb-8">
                         <div className="max-w-xl">
                             <div className="flex items-center gap-3">

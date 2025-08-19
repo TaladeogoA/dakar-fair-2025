@@ -73,8 +73,8 @@ export default function ParallaxFooter() {
                             </div>
 
                             <div className="space-y-2 text-sm md:text-base">
-                                <div className="font-semibold tracking-wide" style={{ color: '#FFD5B5' }}>
-                                    ↘ {t('footer.contact')}
+                                <div className="text-[10px] sm:text-xs uppercase tracking-widest text-[#F4F1EB]/60">
+                                    {t('footer.contact')}
                                 </div>
                                 <a
                                     href={`mailto:${t('footer.email')}`}

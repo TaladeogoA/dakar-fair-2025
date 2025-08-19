@@ -61,11 +61,11 @@ const Home = () => {
           }`}
         style={{ visibility: loading ? 'hidden' : 'visible' }}
       >
-        <main className="relative z-10 pb-[100vh]">
+        <main className="relative z-10 mb-[100vh]">
           <HeroSection />
           <AboutDakarSection partnerLogos={partnerLogos} />
-          <ProgramHighlightsSection highlights={highlights} />
           <WhatsHappeningSection items={whatsItems} />
+          <ProgramHighlightsSection highlights={highlights} />
           <CuratedPavilionCarousel />
           <WhenWhereSection />
         </main>
