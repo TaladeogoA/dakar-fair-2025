@@ -24,6 +24,7 @@ type Dict = {
     program: { kicker: string; title: string; desc: string; explore: string; cta: string };
     curated: { kicker: string; title: string; desc: string; cta: string };
     featured: { kicker: string; ambience: string; slowCuts: string };
+    preloader: { loading: string; ready: string };
     whenwhere: {
         kicker: string;
         title: string;
@@ -138,6 +139,10 @@ export const translations: Record<Locale, Dict> = {
             kicker: 'Voix à l’honneur',
             ambience: 'Ambiance — Dakar',
             slowCuts: 'Plans lents',
+        },
+        preloader: {
+            loading: 'Chargement des contenus...',
+            ready: 'Prêt',
         },
         whenwhere: {
             kicker: 'Quand et où',
@@ -387,6 +392,10 @@ export const translations: Record<Locale, Dict> = {
             cta: 'Explore Pavilion',
         },
         featured: { kicker: 'Featured Voices', ambience: 'Ambience — Dakar', slowCuts: 'Slow cuts' },
+        preloader: {
+            loading: 'Loading assets...',
+            ready: 'Ready',
+        },
         whenwhere: {
             kicker: 'When & Where',
             title: 'Dates, Venue and Getting Here',
